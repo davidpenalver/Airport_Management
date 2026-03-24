@@ -1,1 +1,1 @@
-Versión 1: David Peñalver
+Versión 1: David Peñalver Fernando Gamarra
