@@ -161,7 +161,7 @@ def MapFlights(aircrafts, airports):
         i += 1
 #Search LEBL with it's atributes.
     dest_airport = None
-    i = 0
+    i=0
     while i < len(airports):
         if airports[i].icao == "LEBL":
             dest_airport = airports[i]
@@ -185,17 +185,14 @@ def MapFlights(aircrafts, airports):
                     if airports[j].icao==origin_code:
                         origin_airport=airports[j]
                     j+=1
-
                 if origin_airport is None:
                     i+=1
                     continue
-
 #Color.
                 if origin_airport.schengen:
                     color="ff00ff00"
                 else:
                     color="ff0000ff"
-
                 file.write("<Placemark>\n")
                 file.write("<Style>\n")
                 file.write("<LineStyle>\n")
