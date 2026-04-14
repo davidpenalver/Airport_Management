@@ -92,7 +92,7 @@ def PlotAirlines(aircrafts):
     import matplotlib.pyplot as plt
     if len(aircrafts) == 0:
         print("No aircrafts found")
-        return
+        return -1
     airlines=[]
     count=[]
     i=0
@@ -114,3 +114,108 @@ def PlotAirlines(aircrafts):
     plt.ylabel("Number of flights")
     plt.title("Flights per airline")
     plt.show()
+
+#Function 5: Number of flights from Schengen and Non-Schengen.
+def PlotFlightsType(aircrafts):
+    import matplotlib.pyplot as plt
+    if len(aircrafts) == 0:
+        print("No aircrafts found")
+        return -1
+    schengen_codes=['LO', 'EB', 'LK', 'LC', 'EK', 'EE', 'EF', 'LF', 'ED', 'LG',
+                      'EH', 'LH', 'BI', 'LI', 'EV', 'EY', 'EL', 'LM', 'EN', 'EP',
+                      'LP', 'LZ', 'LJ', 'LE', 'ES', 'LS']
+    schengen_count=0
+    non_schengen_count=0
+    i=0
+    while i<len(aircrafts):
+        code=aircrafts[i].origin_airport[:2].upper()
+        found=False
+        j=0
+        while j<len(schengen_codes) and not found:
+            if code==schengen_codes[j]:
+                found=True
+            else:
+                j+=1
+        if found:
+            schengen_count+=1
+        else:
+            non_schengen_count+=1
+        i+=1
+    plt.bar("Flights", schengen_count, label="Schengen")
+    plt.bar("Flights", non_schengen_count, bottom=schengen_count, label="Non-Schengen")
+    plt.ylabel("Number of flights")
+    plt.title("Schengen vs. Non-Schengen flights")
+    plt.legend()
+    plt.show()
+
+#Function 6: Shows in Google Earth the trajectories of all flights.
+def MapFlights(aircrafts, airports):
+    from airport import *
+    if len(aircrafts) == 0 or len(airports) == 0:
+        print("No data available")
+        return -1
+#Update schengen.
+    i = 0
+    while i < len(airports):
+        SetSchengen(airports[i])
+        i += 1
+#Search LEBL with it's atributes.
+    dest_airport = None
+    i = 0
+    while i < len(airports):
+        if airports[i].icao == "LEBL":
+            dest_airport = airports[i]
+        i += 1
+    if dest_airport is None:
+        print("Destination airport LEBL not found")
+        return -1
+    try:
+        with open("FlightsMap.kml", "w") as file:
+            file.write('<?xml version="1.0" encoding="UTF-8"?>\n')
+            file.write('<kml xmlns="http://www.opengis.net/kml/2.2">\n')
+            file.write('<Document>\n')
+            i = 0
+            while i < len(aircrafts):
+                aircraft = aircrafts[i]
+                origin_code = aircraft.origin_airport
+                #Search airport of origin.
+                origin_airport = None
+                j=0
+                while j<len(airports):
+                    if airports[j].icao==origin_code:
+                        origin_airport=airports[j]
+                    j+=1
+
+                if origin_airport is None:
+                    i+=1
+                    continue
+
+#Color.
+                if origin_airport.schengen:
+                    color="ff00ff00"
+                else:
+                    color="ff0000ff"
+
+                file.write("<Placemark>\n")
+                file.write("<Style>\n")
+                file.write("<LineStyle>\n")
+                file.write("<color>" + color + "</color>\n")
+                file.write("<width>2</width>\n")
+                file.write("</LineStyle>\n")
+                file.write("</Style>\n")
+                file.write("<LineString>\n")
+                file.write("<coordinates>\n")
+                file.write(str(origin_airport.longitude) + "," + str(origin_airport.latitude) + ",0 "+ str(dest_airport.longitude) + "," + str(dest_airport.latitude) + ",0\n")
+                file.write("</coordinates>\n")
+                file.write("</LineString>\n")
+                file.write("</Placemark>\n")
+                i+=1
+            file.write("</Document>\n")
+            file.write("</kml>\n")
+        print("File 'FlightsMap.kml' created")
+        return 0
+    except:
+        return -1
+
+#Function 7: Aircrafts that come from +2000km away.
+def LongDistanceArrivals(aircrafts):
