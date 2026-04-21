@@ -217,7 +217,6 @@ def MapFlights(aircrafts, airports):
 #Function 7: Aircrafts that come from +2000km away.
 def LongDistanceArrivals(aircrafts, airports):
     import math
-    from airport import *
     longdistance=[]
     if len(aircrafts) == 0 or len(airports) == 0:
         return longdistance
