@@ -216,3 +216,48 @@ def MapFlights(aircrafts, airports):
 
 #Function 7: Aircrafts that come from +2000km away.
 def LongDistanceArrivals(aircrafts):
+    import math
+    from airport import *
+    airports=LoadAirports()
+    longdistance=[]
+    if len(aircrafts) == 0 or len(airports) == 0:
+        return longdistance
+    i=0
+    destination=None
+    found=False
+    while i < len(airports) and not found:
+        if airports[i].icao=="LEBL":
+            destination=airports[i]
+        i=i+1
+    if not found:
+        return longdistance
+    i=0
+    while i < len(aircrafts):
+        aircraft = aircrafts[i]
+        origin=aircraft.origin_airport
+        found= False
+        j=0
+        while j<len(airports) and not found:
+            if origin==airports[j].icao:
+                origin=airports[j]
+                found=True
+            j=j+1
+        if not found:
+            i=i+1
+            continue
+#Haversine formula.
+        R=6371 #km
+        lat1=math.radians(origin.latitude)
+        lat2=math.radians(destination.latitude)
+        lon1=math.radians(origin.longitude)
+        lon2=math.radians(destination.longitude)
+        dlat=abs(lat2-lat1)
+        dlon=abs(lon2-lon1)
+        a=(math.sin(dlat/2)**2)+math.cos(lat1)*math.cos(lat2)*(math.sin(dlon/2)**2)
+        c=2*math.atan2(math.sqrt(a),math.sqrt(1-a))
+        d=R*c
+#Compare distances.
+        if d>2000:
+            longdistance.append(aircraft)
+        i=i+1
+    return longdistance
