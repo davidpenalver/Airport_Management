@@ -159,7 +159,6 @@ def MapFlights(aircrafts, airports):
     while i < len(airports):
         SetSchengen(airports[i])
         i += 1
-#Search LEBL with it's atributes.
     dest_airport = None
     i=0
     while i < len(airports):
