@@ -51,12 +51,12 @@ def PlotArrivals(aircrafts):
             hours[h]+=1
         except:
             continue
+    plt.figure()
     plt.bar(Vx, hours)
     plt.xlabel("Hours")
     plt.ylabel("Arrivals")
     plt.title("Arrivals frequency per hour")
-    plt.show()
-
+    return plt
 #Function 3: Write list of aircrafts info a file.
 def SaveFlights(aircrafts, filename):
     if len(aircrafts)==0:
@@ -110,11 +110,12 @@ def PlotAirlines(aircrafts):
             airlines.append(airline)
             count.append(1)
         i+=1
+    plt.figure()
     plt.bar(airlines, count)
     plt.xlabel("Airlines")
     plt.ylabel("Number of flights")
     plt.title("Flights per airline")
-    plt.show()
+    return plt
 
 #Function 5: Number of flights from Schengen and Non-Schengen.
 def PlotFlightsType(aircrafts):
@@ -142,12 +143,13 @@ def PlotFlightsType(aircrafts):
         else:
             non_schengen_count+=1
         i+=1
+    plt.figure()
     plt.bar("Flights", schengen_count, label="Schengen")
     plt.bar("Flights", non_schengen_count, bottom=schengen_count, label="Non-Schengen")
     plt.ylabel("Number of flights")
     plt.title("Schengen vs. Non-Schengen flights")
     plt.legend()
-    plt.show()
+    return plt
 
 #Function 6: Shows in Google Earth the trajectories of all flights.
 def MapFlights(aircrafts, airports):

@@ -138,6 +138,7 @@ def PlotAirports(airports):
         else:
             non_schengen_count+=1
         i=i+1
+    plt.figure()
     plt.bar("Airport", schengen_count, label="Schengen")
     plt.bar("Airport", non_schengen_count, bottom=schengen_count, label="Non Schengen")
     plt.title("Schengen vs Non-Schengen")
