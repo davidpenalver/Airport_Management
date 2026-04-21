@@ -1,3 +1,4 @@
+from airport import *
 # Aircraft class
 class Aircraft:
     def __init__(self, aircraft_id="", origin_airport="", landing_time="", airline_company=""):
@@ -150,7 +151,7 @@ def PlotFlightsType(aircrafts):
 
 #Function 6: Shows in Google Earth the trajectories of all flights.
 def MapFlights(aircrafts, airports):
-    from airport import *
+#    from airport import *
     if len(aircrafts) == 0 or len(airports) == 0:
         print("No data available")
         return -1
@@ -259,3 +260,8 @@ def LongDistanceArrivals(aircrafts, airports):
             longdistance.append(aircraft)
         i=i+1
     return longdistance
+
+# test section
+if __name__ == "__main__":
+    aircrafts = LoadArrivals("Arrivals.txt")
+    PlotArrivals (aircrafts)
