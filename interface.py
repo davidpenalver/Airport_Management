@@ -1,12 +1,76 @@
 import tkinter as tk
 from tkinter import filedialog, messagebox
-from airport import *
+# from airport import *
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import os
-
+from aircraft import *
 airports=[]
+aircrafts=[]
 
-# Functions of the interface.
+# Functions of the interface V2.
+def load_aircrafts():
+    global aircrafts
+    filename = filedialog.askopenfilename()
+    aircrafts=LoadArrivals(filename)
+    if len(aircrafts)==0:
+        messagebox.showerror("Error", "Error loading file.")
+    else:
+        messagebox.showinfo("Success", str(len(aircrafts)) + " aircrafts loaded.")
+
+def plot_arrivals():
+    if len(aircrafts) == 0:
+        messagebox.showerror("Error", "No aircrafts.")
+        return
+    plt_obj=PlotArrivals(aircrafts)
+    fig = plt_obj.gcf()
+    canvas = FigureCanvasTkAgg(fig, master=root)
+    canvas.draw()
+    canvas.get_tk_widget().grid(row=0, column=3, columnspan=1, rowspan=8)
+
+def save_flights():
+    filename = filedialog.asksaveasfilename(defaultextension=".txt")
+    result = SaveFlights(aircrafts, filename)
+    if result == 0:
+        messagebox.showinfo("Success", "File successfully saved.")
+    else:
+        messagebox.showerror("Error", "File not saved.")
+
+def plot_airlines():
+    if len(aircrafts) == 0:
+        messagebox.showerror("Error", "No aircrafts.")
+        return
+    plt_obj=PlotAirlines(aircrafts)
+    fig = plt_obj.gcf()
+    canvas = FigureCanvasTkAgg(fig, master=root)
+    canvas.draw()
+    canvas.get_tk_widget().grid(row=0, column=3, columnspan=1, rowspan=8)
+
+def plot_flights_type():
+    if len(aircrafts) == 0:
+        messagebox.showerror("Error", "No aircrafts.")
+        return
+    plt_obj=PlotFlightsType(aircrafts)
+    fig = plt_obj.gcf()
+    canvas = FigureCanvasTkAgg(fig, master=root)
+    canvas.draw()
+    canvas.get_tk_widget().grid(row=0, column=3, columnspan=1, rowspan=8)
+
+def map_flights():
+    result = MapFlights(aircrafts, airports)
+    if result == 0:
+        messagebox.showinfo("Success", "Map successfully created.")
+        os.system("Start FlightsMap.kml")
+    else:
+        messagebox.showerror("Error", "Map not created.")
+
+def long_distance_arrivals():
+    result = LongDistanceArrivals(aircrafts, airports)
+    if len(result)==0:
+            messagebox.showerror("Error", "List not created.")
+    else:
+        messagebox.showinfo("Success", "List successfully created.")
+
+# Functions of the interface V1.
 def load_airports():
     global airports
     filename=filedialog.askopenfilename()
@@ -117,7 +181,16 @@ tk.Button(root,text="Remove Airport", command=remove_airport).grid(row=4, column
 tk.Button(root,text="Show Airports", command=show_aiports).grid(row=4, column=1)
 tk.Button(root,text="Save Schengen Airports", command=save_schengen).grid(row=5, column=1)
 tk.Button(root,text="Plot Schengen vs. Non-Schengen", command=plot_aiports).grid(row=5, column=0)
-tk.Button(root,text="Map", command=map_airports).grid(row=6, column=0)
+tk.Button(root,text="Map Airports", command=map_airports).grid(row=6, column=0)
+
+#Version 2 Buttons.
+tk.Button(root,text="Load Flights", command=load_aircrafts).grid(row=8, column=0)
+tk.Button(root,text="Plot Arrivals", command=plot_arrivals).grid(row=8, column=1)
+tk.Button(root,text="Save correct format Flights", command=save_flights).grid(row=9, column=0)
+tk.Button(root,text="Plot Flights per Airline", command= plot_airlines).grid(row=9, column=1)
+tk.Button(root,text="Plot Schengen vs. Non-Schengen arrivals", command=plot_flights_type).grid(row=10, column=0)
+tk.Button(root,text="Trajectories Map", command=map_flights).grid(row=10, column=1)
+tk.Button(root,text="Save Long Distance Arrivals", command=long_distance_arrivals).grid(row=11, column=0)
 
 text=tk.Text(root,width=60,height=15)
 text.grid(row=7,column=0,columnspan=2)
