@@ -4,7 +4,6 @@ from airport import *
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import os
 
-#CHAT GPT helped to make a robust program by using try/except to ignore errors.
 airports=[]
 
 # Functions of the interface.

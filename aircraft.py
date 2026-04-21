@@ -41,7 +41,7 @@ def PlotArrivals(aircrafts):
     import matplotlib.pyplot as plt
     if len(aircrafts)==0:
         print("No aircrafts found")
-        return
+        return -1
     Vx=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23]
     hours=[0]*24
     for aircraft in aircrafts:
@@ -151,7 +151,6 @@ def PlotFlightsType(aircrafts):
 
 #Function 6: Shows in Google Earth the trajectories of all flights.
 def MapFlights(aircrafts, airports):
-#    from airport import *
     if len(aircrafts) == 0 or len(airports) == 0:
         print("No data available")
         return -1
@@ -263,5 +262,31 @@ def LongDistanceArrivals(aircrafts, airports):
 
 # test section
 if __name__ == "__main__":
+    from airport import *
+    airports = LoadAirports("Airports.txt")
     aircrafts = LoadArrivals("Arrivals.txt")
-    PlotArrivals (aircrafts)
+    longdistance = LongDistanceArrivals(aircrafts, airports)
+    if len(longdistance) == 0:
+        print("Fail")
+        print(len(airports))
+        print(len(aircrafts))
+    else:
+        print("Success")
+    mf = MapFlights(aircrafts, airports)
+    if mf == -1:
+        print("Fail")
+        print(len(airports))
+    else:
+        print("Success")
+    if len(aircrafts)>0:
+        print("Success")
+    else:
+        print("Fail")
+    sf=SaveFlights(aircrafts, "SaveFlights.txt")
+    if sf==-1:
+        print("Fail")
+    else:
+        print("Success")
+    PlotArrivals(aircrafts)
+    PlotAirlines(aircrafts)
+    PlotFlightsType(aircrafts)
