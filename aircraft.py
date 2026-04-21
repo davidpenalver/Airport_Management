@@ -215,10 +215,9 @@ def MapFlights(aircrafts, airports):
         return -1
 
 #Function 7: Aircrafts that come from +2000km away.
-def LongDistanceArrivals(aircrafts):
+def LongDistanceArrivals(aircrafts, airports):
     import math
     from airport import *
-    airports=LoadAirports()
     longdistance=[]
     if len(aircrafts) == 0 or len(airports) == 0:
         return longdistance
@@ -228,6 +227,7 @@ def LongDistanceArrivals(aircrafts):
     while i < len(airports) and not found:
         if airports[i].icao=="LEBL":
             destination=airports[i]
+            found=True
         i=i+1
     if not found:
         return longdistance
