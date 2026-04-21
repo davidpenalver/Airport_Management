@@ -6,6 +6,16 @@ import os
 from aircraft import *
 airports=[]
 aircrafts=[]
+canvas=None
+
+# Function to clean the canvas.
+def show_plot(fig):
+    global canvas
+    if canvas is not None:
+        canvas.get_tk_widget().destroy()
+    canvas = FigureCanvasTkAgg(fig, master=root)
+    canvas.draw()
+    canvas.get_tk_widget().grid(row=0, column=3, rowspan=8)
 
 # Functions of the interface V2.
 def load_aircrafts():
@@ -21,11 +31,9 @@ def plot_arrivals():
     if len(aircrafts) == 0:
         messagebox.showerror("Error", "No aircrafts.")
         return
-    plt_obj=PlotArrivals(aircrafts)
+    plt_obj = PlotArrivals(aircrafts)
     fig = plt_obj.gcf()
-    canvas = FigureCanvasTkAgg(fig, master=root)
-    canvas.draw()
-    canvas.get_tk_widget().grid(row=0, column=3, columnspan=1, rowspan=8)
+    show_plot(fig)
 
 def save_flights():
     filename = filedialog.asksaveasfilename(defaultextension=".txt")
@@ -39,21 +47,17 @@ def plot_airlines():
     if len(aircrafts) == 0:
         messagebox.showerror("Error", "No aircrafts.")
         return
-    plt_obj=PlotAirlines(aircrafts)
+    plt_obj = PlotAirlines(aircrafts)
     fig = plt_obj.gcf()
-    canvas = FigureCanvasTkAgg(fig, master=root)
-    canvas.draw()
-    canvas.get_tk_widget().grid(row=0, column=3, columnspan=1, rowspan=8)
+    show_plot(fig)
 
 def plot_flights_type():
     if len(aircrafts) == 0:
         messagebox.showerror("Error", "No aircrafts.")
         return
-    plt_obj=PlotFlightsType(aircrafts)
+    plt_obj = PlotFlightsType(aircrafts)
     fig = plt_obj.gcf()
-    canvas = FigureCanvasTkAgg(fig, master=root)
-    canvas.draw()
-    canvas.get_tk_widget().grid(row=0, column=3, columnspan=1, rowspan=8)
+    show_plot(fig)
 
 def map_flights():
     result = MapFlights(aircrafts, airports)
@@ -144,10 +148,8 @@ def plot_aiports():
         messagebox.showerror("Error", "No airports.")
         return
     plt_obj=PlotAirports(airports)
-    fig=plt_obj.gcf()
-    canvas = FigureCanvasTkAgg(fig, master=root)
-    canvas.draw()
-    canvas.get_tk_widget().grid(row=0, column=3, columnspan=1, rowspan=8)
+    fig = plt_obj.gcf()
+    show_plot(fig)
 
 def map_airports():
     result=MapAirports(airports)
