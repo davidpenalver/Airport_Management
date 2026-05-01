@@ -1,5 +1,5 @@
 from airport import *
-# Aircraft class
+#Aircraft class
 class Aircraft:
     def __init__(self, aircraft_id="", origin_airport="", landing_time="", airline_company=""):
         self.aircraft_id = aircraft_id
