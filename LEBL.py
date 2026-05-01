@@ -58,8 +58,8 @@ def LoadAirportStructure(filename):
         f=open(filename,"r")
     except:
         return -1
-    line=f.readline()
-    parts=line.split().strip()
+    line=f.readline().strip()
+    parts=line.split()
     code=parts[0]
     bcn=BarcelonaAP(code)
     num_terminals=int(parts[1])
@@ -76,8 +76,8 @@ def LoadAirportStructure(filename):
 #Boarding areas.
         j=0
         while j<areas_num:
-            line=f.readline()
-            parts=line.split().strip()
+            line=f.readline().strip()
+            parts=line.split()
             area_name=parts[1]
             area_type=parts[2]
             init_gate=int(parts[4])
