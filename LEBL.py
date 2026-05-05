@@ -35,7 +35,7 @@ def SetGates(area,init_gate,end_gate,prefix):
         i=i+1
     return 0
 
-#Function 2: Update list of airlines in each terminal. - AI helped to determine the order of the analysis.
+#Function 2: Update list of airlines in each terminal.
 def LoadAirlines(terminal,t_name):
     airlines_list=[]
     name_file=str(t_name)+"_Airlines.txt"
@@ -52,7 +52,7 @@ def LoadAirlines(terminal,t_name):
     except:
         return -1
 
-#Function 3: Returns class BarcelonaAP:
+#Function 3: Returns class BarcelonaAP - AI helped to determine the order of the analysis:
 def LoadAirportStructure(filename):
     try:
         f=open(filename,"r")
@@ -93,7 +93,7 @@ def LoadAirportStructure(filename):
     return bcn
 
 #Function 4: Status of each gate.
-def GateOccupany(bcn):
+def GateOccupancy(bcn):
     if bcn is None:
         return []
     result=[]
@@ -118,4 +118,20 @@ def GateOccupany(bcn):
         i=i+1
     return result
 
-#Function 4.extra: Plot.
+#Function 4.extra: Plot occupancy.
+#Function 5: Is the airline from that terminal.
+def IsAirlineInTerminal(terminal, name):
+    if name=="":
+        return False
+    if len(terminal.airlines)==0:
+        return False
+    i=0
+    found=False
+    while i<len(terminal.airlines) and not found:
+        if terminal.airlines[i]==name:
+            found=True
+        i=i+1
+    if found:
+        return True
+    if not found:
+        return False
