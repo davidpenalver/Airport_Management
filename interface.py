@@ -138,7 +138,6 @@ def show_aiports():
     i=0
     line="ICAO code | Latitude | Longitude | Schengen \n"
     text.insert(tk.END, line + "\n")
-    # ¿<= o <?__________________________________________________
     while i<len(airports):
 
         line=airports[i].icao + " | " + str(airports[i].latitude) + " | " + str(airports[i].longitude) + " | " + str(
