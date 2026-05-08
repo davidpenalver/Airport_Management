@@ -135,3 +135,19 @@ def IsAirlineInTerminal(terminal, name):
         return True
     if not found:
         return False
+
+#Function 6: Name of the terminal where an airline should board.
+def SearchTerminal (bcn, name):
+    i=0
+    found=False
+    while i<len(bcn.terminals) and not found:
+        if IsAirlineInTerminal(bcn.terminals[i],name):
+            terminal=bcn.terminals[i]
+            found=True
+        i=i+1
+    if found:
+        return terminal.name
+    if not found:
+        return ""
+
+#Function 7: Look for the first free gate in the correct area for a given aircraft from Class Aircraft.

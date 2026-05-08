@@ -4,9 +4,20 @@ from tkinter import filedialog, messagebox
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import os
 from aircraft import *
+from LEBL import *
 airports=[]
 aircrafts=[]
 canvas=None
+
+#Functions of the interface V3:
+def set_gates():
+def load_airlines():
+def load_airport_structure():
+def gate_occupancy():
+def plot_gate_occupancy():
+def is_airline_in_terminal():
+def search_terminal():
+def assign_gate():
 
 # Function to clean the canvas.
 def show_plot(fig):
@@ -127,7 +138,6 @@ def show_aiports():
     i=0
     line="ICAO code | Latitude | Longitude | Schengen \n"
     text.insert(tk.END, line + "\n")
-    # ¿<= o <?__________________________________________________
     while i<len(airports):
 
         line=airports[i].icao + " | " + str(airports[i].latitude) + " | " + str(airports[i].longitude) + " | " + str(
