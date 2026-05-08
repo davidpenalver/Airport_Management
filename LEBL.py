@@ -96,7 +96,7 @@ def LoadAirportStructure(filename):
 def GateOccupancy(bcn):
     if bcn is None:
         return []
-    result=[]
+    allGates=[]
     i=0
     while i<len(bcn.terminals):
         terminal=bcn.terminals[i]
@@ -112,13 +112,39 @@ def GateOccupancy(bcn):
                 else:
                     status="Unoccupied"
                     aircraft=None
-                result.append((gate.name, status, aircraft))
+                allGates.append((gate.name, status, aircraft))
                 k=k+1
             j=j+1
         i=i+1
-    return result
+    return allGates
 
 #Function 4.extra: Plot occupancy.
+def PlotGateOccupancy(allGates):
+    import re
+    import matplotlib.pyplot as plt
+    if allGates is None:
+        return -1
+    else:
+        i=0
+        while i<len(allGates):
+            gateproperties=allGates[i]
+            # (TtBAaGg x ejemplo) depende que gate sea da un valor o otro
+            numerogate = re.match(r"T(\d+)BA(\d+)G(\d+)", gateproperties.name)
+
+
+
+
+
+
+
+        terminal = m.group(1)
+        area = m.group(2)
+        gate = m.group(3)
+
+
+
+
+
 #Function 5: Is the airline from that terminal.
 def IsAirlineInTerminal(terminal, name):
     if name=="":
