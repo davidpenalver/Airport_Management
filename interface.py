@@ -8,7 +8,7 @@ from LEBL import *
 airports=[]
 aircrafts=[]
 canvas=None
-
+root=None
 #Functions of the interface V3:
 def set_gates():
 def load_airlines():
@@ -170,7 +170,6 @@ def map_airports():
         messagebox.showerror("Error","Map not created.")
 
 # Interface.
-
 root=tk.Tk()
 root.title("Airport Manager")
 
