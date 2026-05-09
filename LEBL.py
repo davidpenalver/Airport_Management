@@ -377,6 +377,9 @@ def plotAllGates(structData, fig, ax):
 
     fig.canvas.draw()
 
+
+
+#hay que llamar a esta última :)
 def PlotGateOccupancy(allGates):
 
     dataAllGates = buildDataToPlot(allGates)
