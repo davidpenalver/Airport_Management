@@ -9,15 +9,73 @@ airports=[]
 aircrafts=[]
 canvas=None
 root=None
+bcn=None
 #Functions of the interface V3:
-def set_gates():
-def load_airlines():
-def load_airport_structure():
-def gate_occupancy():
-def plot_gate_occupancy():
-def is_airline_in_terminal():
-def search_terminal():
 def assign_gate():
+    global bcn,aircrafts
+    if bcn is None:
+        messagebox.showerror("Error", "Load airport structure first.")
+        return
+    if len(aircrafts)==0:
+        messagebox.showerror("Error", "No aircrafts loaded.")
+        return
+    assigned=0
+    failed=0
+    i=0
+    while i<len(aircrafts):
+        ac=aircrafts[i]
+        r=AssignGate(bcn,ac)
+        if r==0:
+            assigned += 1
+        else:
+            failed += 1
+        i+=1
+
+    messagebox.showinfo("Result","Gates assigned: " + str(assigned) + "\nFailed: " + str(failed))
+
+def gate_occupancy():
+    global bcn
+    if bcn is None:
+        messagebox.showerror("Error", "Load airport structure first.")
+        return
+    gates=GateOccupancy(bcn)
+    text.delete(1.0, tk.END)
+    i=0
+    while i<len(gates):
+        name, status, aircraft = gates[i]
+        line=name + " | " + status + " | " + str(aircraft) + "\n"
+        text.insert(tk.END,line)
+        i+=1
+
+def plot_gate_occupancy():
+    global bcn
+    if bcn is None:
+        messagebox.showerror("Error", "Load airport structure first.")
+        return
+    gates=GateOccupancy(bcn)
+    fig=PlotGateOccupancy(gates)
+    show_plot(fig)
+
+def load_airport_structure():
+    global bcn
+    filename=filedialog.askopenfilename()
+    bcn=LoadAirportStructure(filename)
+    if bcn==-1 or bcn is None:
+        messagebox.showerror("Error", "Error loading airport structure.")
+    else:
+        messagebox.showinfo("Success", "Airport structure loaded correctly.")
+
+def search_terminal():
+    global bcn
+    if bcn is None:
+        messagebox.showerror("Error", "Load airport first.")
+        return
+    airline=entry_code.get()
+    result=SearchTerminal(bcn, airline)
+    if result=="":
+        messagebox.showerror("Error", "Airline not found.")
+    else:
+        messagebox.showinfo("Result", "Terminal: " + result)
 
 # Function to clean the canvas.
 def show_plot(fig):
@@ -202,6 +260,12 @@ tk.Button(root,text="Plot Flights per Airline", command= plot_airlines).grid(row
 tk.Button(root,text="Plot Schengen vs. Non-Schengen arrivals", command=plot_flights_type).grid(row=10, column=0)
 tk.Button(root,text="Trajectories Map", command=map_flights).grid(row=10, column=1)
 tk.Button(root,text="Save Long Distance Arrivals", command=long_distance_arrivals).grid(row=11, column=0)
+
+#Version 3 Buttons.
+tk.Button(root, text="Load Aiport Structure",command=load_airport_structure).grid(row=12, column=0)
+tk.Button(root, text="Assign Gates",command=assign_gate).grid(row=12, column=1)
+tk.Button(root, text="Show Gate Occupancy",command=gate_occupancy).grid(row=13, column=0)
+tk.Button(root, text="Plot Gate Occupancy",command=plot_gate_occupancy).grid(row=13, column=1)
 
 text=tk.Text(root,width=60,height=15)
 text.grid(row=7,column=0,columnspan=2)

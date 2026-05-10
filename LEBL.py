@@ -1,10 +1,13 @@
+'''
 import sys
 import tkinter as tk
-import re
-import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.font_manager import FontProperties
 import interface
+'''
+import re
+import matplotlib.pyplot as plt
+from matplotlib.font_manager import FontProperties
 #Classes.
 class Gate:
     def __init__(self, name):
@@ -73,8 +76,8 @@ def LoadAirportStructure(filename):
 #Read terminals.
     i=0
     while i<num_terminals:
-        line=f.readline()
-        parts=line.split().strip()
+        line=f.readline().strip()
+        parts=line.split()
         name_terminal=parts[1]
         areas_num=int(parts[2])
         terminal=Terminal(name_terminal)
@@ -124,7 +127,7 @@ def GateOccupancy(bcn):
             j=j+1
         i=i+1
     return allGates
-
+'''
 #Function 4.extra: Plot occupancy.
 def buildDataToPlot(allGates):
     struct = {}
@@ -396,6 +399,184 @@ def PlotGateOccupancy(allGates):
     tk_canvas.yview_moveto(0)
 
     return fig
+'''
+#Function 4.extra - corrected with AI.
+
+
+def buildDataToPlot(gates_list):
+
+    struct = {}
+
+    pattern = r"(T\d+)(BA[A-Za-z]+)G(\d+)"
+
+    i = 0
+
+    while i < len(gates_list):
+
+        name, status, aircraft = gates_list[i]
+
+        match = re.match(pattern, name)
+
+        if match:
+
+            terminal = match.group(1)
+            area = match.group(2)
+            gate_number = int(match.group(3))
+
+            if terminal not in struct:
+                struct[terminal] = {}
+
+            if area not in struct[terminal]:
+                struct[terminal][area] = []
+
+            info = {
+                "number": gate_number,
+                "occupied": (status == "Occupied"),
+                "aircraft": aircraft
+            }
+
+            struct[terminal][area].append(info)
+
+        i += 1
+
+    return struct
+
+
+def PlotGateOccupancy(gates_list):
+
+    fig, ax = plt.subplots(figsize=(10,6))
+
+    terminals = {}
+
+    i = 0
+
+    while i < len(gates_list):
+
+        name, status, aircraft = gates_list[i]
+
+        # separar partes manualmente
+        # ejemplo: T1AG3
+
+        terminal = name[:2]
+
+        rest = name[2:]
+
+        j = 0
+
+        while j < len(rest) and not rest[j].isdigit():
+            j += 1
+
+        area = rest[:j]
+
+        gate_number = int(rest[j:])
+
+        if terminal not in terminals:
+            terminals[terminal] = {}
+
+        if area not in terminals[terminal]:
+            terminals[terminal][area] = []
+
+        terminals[terminal][area].append(
+            (gate_number, status)
+        )
+
+        i += 1
+
+    y = 0
+
+    terminals_names = list(terminals.keys())
+
+    t = 0
+
+    while t < len(terminals_names):
+
+        terminal = terminals_names[t]
+
+        ax.text(
+            0,
+            y,
+            terminal,
+            fontsize=16,
+            weight="bold"
+        )
+
+        areas = list(terminals[terminal].keys())
+
+        a = 0
+
+        while a < len(areas):
+
+            area = areas[a]
+
+            y -= 1
+
+            ax.plot(
+                [1,1],
+                [y-0.5, y+0.5],
+                linewidth=10
+            )
+
+            ax.text(
+                1.3,
+                y,
+                area,
+                fontsize=12,
+                weight="bold"
+            )
+
+            gates = terminals[terminal][area]
+
+            g = 0
+
+            while g < len(gates):
+
+                gate_number, status = gates[g]
+
+                x = 3 + g
+
+                color = "red"
+
+                if status == "Unoccupied":
+                    color = "green"
+
+                rect = plt.Rectangle(
+                    (x, y-0.2),
+                    0.8,
+                    0.4,
+                    color=color
+                )
+
+                ax.add_patch(rect)
+
+                gate_name = (
+                    terminal
+                    + area
+                    + "G"
+                    + str(gate_number)
+                )
+
+                ax.text(
+                    x + 0.4,
+                    y,
+                    gate_name,
+                    ha="center",
+                    va="center",
+                    fontsize=6
+                )
+
+                g += 1
+
+            a += 1
+
+        y -= 2
+
+        t += 1
+
+    ax.set_title("Airport Gate Occupancy")
+
+    ax.axis("off")
+
+    return fig
 
 #Function 5: Is the airline from that terminal.
 def IsAirlineInTerminal(terminal, name):
@@ -418,6 +599,7 @@ def IsAirlineInTerminal(terminal, name):
 def SearchTerminal (bcn, name):
     i=0
     found=False
+    terminal=None
     while i<len(bcn.terminals) and not found:
         if IsAirlineInTerminal(bcn.terminals[i],name):
             terminal=bcn.terminals[i]
@@ -429,3 +611,95 @@ def SearchTerminal (bcn, name):
         return ""
 
 #Function 7: Look for the first free gate in the correct area for a given aircraft from Class Aircraft.
+from airport import IsSchengenAirport
+def AssignGate(bcn, aircraft):
+#Buscar terminal por aerolínea
+    terminal_name = SearchTerminal(bcn, aircraft.airline_company)
+    if terminal_name == "":
+        return -1
+#Encontrar terminal
+    terminal = None
+    i = 0
+    while i < len(bcn.terminals) and terminal is None:
+        if bcn.terminals[i].name == terminal_name:
+            terminal = bcn.terminals[i]
+        i += 1
+    if terminal is None:
+        return -1
+#Comprobar si el vuelo es Schengen
+    schengen = IsSchengenAirport(aircraft.origin_airport)
+#Buscar BoardingArea
+    j = 0
+    while j < len(terminal.boarding_areas):
+        area = terminal.boarding_areas[j]
+        if schengen == True and area.type=="Schengen":
+            # buscar gate libre
+            k = 0
+            while k < len(area.gates):
+                gate = area.gates[k]
+                if not gate.occupied:
+                    gate.occupied = True
+                    gate.aircraft_id = aircraft.aircraft_id
+                    return 0
+                k += 1
+        elif schengen==False and area.type=="non-Schengen":
+            k = 0
+            while k < len(area.gates):
+                gate = area.gates[k]
+                if not gate.occupied:
+                    gate.occupied = True
+                    gate.aircraft_id = aircraft.aircraft_id
+                    return 0
+                k += 1
+        j += 1
+    return -1
+
+#TEST CODE:
+if __name__ == "__main__":
+#PROBAR LoadAirportStructure
+    bcn = LoadAirportStructure("Terminals.txt")
+    if bcn == -1 or bcn is None:
+        print("ERROR: No se pudo cargar Terminals.txt\n")
+    else:
+        print("Estructura cargada correctamente")
+        print(f"  Código aeropuerto: {bcn.code}")
+        print(f"  Nº terminales: {len(bcn.terminals)}\n")
+#LISTAR TERMINALES, AREAS Y GATES
+    for terminal in bcn.terminals:
+        print(f"Terminal {terminal.name}:")
+        print(f"  Aerolíneas: {len(terminal.airlines)}")
+        for area in terminal.boarding_areas:
+            print(f"   Área {area.name} ({area.type}) -> {len(area.gates)} gates")
+        print()
+#IsAirlineInTerminal + SearchTerminal
+    test_airline = None
+    if len(bcn.terminals[0].airlines) > 0:
+        test_airline = bcn.terminals[0].airlines[0]
+        print(f"   Tomando aerolínea de ejemplo: {test_airline}")
+        result = SearchTerminal(bcn, test_airline)
+        print(f"   Resultado SearchTerminal({test_airline}) = {result}\n")
+    else:
+        print("No hay aerolíneas en T1 para probar\n")
+#GateOccupancy
+    gates = GateOccupancy(bcn)
+    print(f"  Nº total de gates: {len(gates)}")
+    print(f"  Gates desocupados: {sum(1 for g in gates if g[1]=='Unoccupied')}\n")
+#TEST AssignGate
+    class DummyAircraft: # - AI
+        def __init__(self, ident, origin, airline):
+            self.id = ident
+            self.origin = origin
+            self.airline = airline
+    if test_airline:
+        dummy = DummyAircraft("TEST01", "LEMD", test_airline)   # origen Schengen
+        r = AssignGate(bcn, dummy)
+        if r == 0:
+            print("Gate asignado correctamente")
+        else:
+            print("ERROR asignando gate")
+#mostrar gates ocupados
+        gates_after = GateOccupancy(bcn)
+        occupied = [g for g in gates_after if g[1] == "Occupied"]
+        print(f"  Gates ocupados tras asignación: {len(occupied)}")
+        print(f"  Ejemplo: {occupied[0] if occupied else '---'}\n")
+    print("FIN TEST\n")
