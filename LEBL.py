@@ -404,94 +404,57 @@ def PlotGateOccupancy(allGates):
 
 
 def buildDataToPlot(gates_list):
-
     struct = {}
-
     pattern = r"(T\d+)(BA[A-Za-z]+)G(\d+)"
-
     i = 0
-
     while i < len(gates_list):
-
         name, status, aircraft = gates_list[i]
-
-        match = re.match(pattern, name)
-
+        match = re.match(pattern, name) #separar cada gate en lo que es, por ejemplo T1BAbG5 1 b 5
         if match:
-
             terminal = match.group(1)
             area = match.group(2)
             gate_number = int(match.group(3))
-
+            #asignar el 1 a terminal la b a area y 5 a gate ejemplo anterior
             if terminal not in struct:
                 struct[terminal] = {}
-
             if area not in struct[terminal]:
                 struct[terminal][area] = []
-
             info = {
                 "number": gate_number,
                 "occupied": (status == "Occupied"),
                 "aircraft": aircraft
             }
-
             struct[terminal][area].append(info)
-
         i += 1
-
     return struct
 
 
 def PlotGateOccupancy(gates_list):
-
     fig, ax = plt.subplots(figsize=(10,6))
-
     terminals = {}
-
     i = 0
-
     while i < len(gates_list):
-
         name, status, aircraft = gates_list[i]
-
-        # separar partes manualmente
-        # ejemplo: T1AG3
-
         terminal = name[:2]
-
         rest = name[2:]
-
         j = 0
-
         while j < len(rest) and not rest[j].isdigit():
             j += 1
-
         area = rest[:j]
-
         gate_number = int(rest[j:])
-
         if terminal not in terminals:
             terminals[terminal] = {}
-
         if area not in terminals[terminal]:
             terminals[terminal][area] = []
-
         terminals[terminal][area].append(
             (gate_number, status)
         )
-
         i += 1
-
     y = 0
-
     terminals_names = list(terminals.keys())
-
     t = 0
-
     while t < len(terminals_names):
-
         terminal = terminals_names[t]
-
         ax.text(
             0,
             y,
@@ -499,23 +462,16 @@ def PlotGateOccupancy(gates_list):
             fontsize=16,
             weight="bold"
         )
-
         areas = list(terminals[terminal].keys())
-
         a = 0
-
         while a < len(areas):
-
             area = areas[a]
-
             y -= 10
-
             ax.plot(
                 [1,1],
                 [y-5, y+5],
                 linewidth=10
             )
-
             ax.text(
                 1.5,
                 y,
@@ -523,38 +479,27 @@ def PlotGateOccupancy(gates_list):
                 fontsize=12,
                 weight="bold"
             )
-
             gates = terminals[terminal][area]
-
             g = 0
-
             while g < len(gates):
-
                 gate_number, status = gates[g]
-
                 x = 3 + g
-
                 color = "red"
-
                 if status == "Unoccupied":
                     color = "green"
-
                 rect = plt.Rectangle(
                     (x, y-0.2),
                     0.8,
                     0.4,
                     color=color
                 )
-
                 ax.add_patch(rect)
-
                 gate_name = (
                     terminal
                     + area
                     + "G"
                     + str(gate_number)
                 )
-
                 ax.text(
                     x + 0.4,
                     y,
@@ -563,19 +508,12 @@ def PlotGateOccupancy(gates_list):
                     va="center",
                     fontsize=6, rotation=90
                 )
-
                 g += 1
-
             a += 1
-
         y -= 12
-
         t += 1
-
     ax.set_title("Airport Gate Occupancy")
-
     ax.axis("off")
-
     return fig
 
 #Function 5: Is the airline from that terminal.
