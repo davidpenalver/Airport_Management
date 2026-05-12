@@ -1,3 +1,5 @@
+import matplotlib.pyplot as plt
+
 from airport import *
 #Aircraft class
 class Aircraft:
@@ -262,6 +264,35 @@ def LongDistanceArrivals(aircrafts, airports):
         i=i+1
     return longdistance
 
+#Función examen.
+def PlotAirlinesAvsE(aircrafts):
+        numE=0
+        numA=0
+        airlines = []
+        i = 0
+        while i < len(aircrafts):
+            airline = aircrafts[i].airline_company
+            airlines.append(airline)
+            i += 1
+        i=0
+        while i<len(airlines):
+            primeraLetra=airlines[i][0]
+            if primeraLetra=="E":
+                numE+=1
+            elif primeraLetra=="A":
+                numA+=1
+            i+=1
+
+        vx=["A","E"]
+        vy=[numA,numE]
+        plt.figure()
+        plt.bar(vx, vy)
+        plt.xlabel("Letter")
+        plt.ylabel("Number of airlines")
+        plt.title("Comparison airlines with first letter A vs E")
+        plt.show()
+        return
+
 # test section
 if __name__ == "__main__":
     from airport import *
@@ -292,3 +323,4 @@ if __name__ == "__main__":
     PlotArrivals(aircrafts)
     PlotAirlines(aircrafts)
     PlotFlightsType(aircrafts)
+    PlotAirlinesAvsE(aircrafts)

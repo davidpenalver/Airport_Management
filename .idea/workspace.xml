@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cbe9e265-e7b8-4247-a1ff-320ae310f2fd" name="Changes" comment="Arregladas ventanas emergentes">
-      <change beforePath="$PROJECT_DIR$/LEBL.py" beforeDir="false" afterPath="$PROJECT_DIR$/LEBL.py" afterDir="false" />
+    <list default="true" id="cbe9e265-e7b8-4247-a1ff-320ae310f2fd" name="Changes" comment="espacios quitados">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aircraft.py" beforeDir="false" afterPath="$PROJECT_DIR$/aircraft.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -259,11 +260,20 @@
       <option name="project" value="LOCAL" />
       <updated>1778578429371</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="espacios quitados">
+      <option name="closed" value="true" />
+      <created>1778578973127</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1778578973127</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Arregladas ventanas emergentes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Arregladas ventanas emergentes" />
+    <MESSAGE value="espacios quitados" />
+    <option name="LAST_COMMIT_MESSAGE" value="espacios quitados" />
   </component>
 </project>
