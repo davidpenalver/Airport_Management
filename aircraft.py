@@ -264,6 +264,118 @@ def LongDistanceArrivals(aircrafts, airports):
         i=i+1
     return longdistance
 
+#Exam function: delete arrivals from from less than 1000km away and show the rest of arrivals on Google Earth.
+def ShortDistanceArrivalsMaps(aircrafts, airports):
+#Distance
+    import math
+    shortdistance = []
+    if len(aircrafts) == 0 or len(airports) == 0:
+        return shortdistance
+    i = 0
+    destination = None
+    found = False
+    while i < len(airports) and not found:
+        if airports[i].icao == "LEBL":
+            destination = airports[i]
+            found = True
+        i = i + 1
+    if not found:
+        return shortdistance
+    i = 0
+    while i < len(aircrafts):
+        aircraft = aircrafts[i]
+        origin = aircraft.origin_airport
+        found = False
+        j = 0
+        while j < len(airports) and not found:
+            if origin == airports[j].icao:
+                origin = airports[j]
+                found = True
+            j = j + 1
+        if not found:
+            i = i + 1
+            continue
+        # Haversine formula.
+        R = 6371  # km
+        lat1 = math.radians(origin.latitude)
+        lat2 = math.radians(destination.latitude)
+        lon1 = math.radians(origin.longitude)
+        lon2 = math.radians(destination.longitude)
+        dlat = abs(lat2 - lat1)
+        dlon = abs(lon2 - lon1)
+        a = (math.sin(dlat / 2) ** 2) + math.cos(lat1) * math.cos(lat2) * (math.sin(dlon / 2) ** 2)
+        c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
+        d = R * c
+        # Compare distances.
+        if d < 1000:
+            aircrafts.pop(i)
+            shortdistance.append(aircraft)
+        else:
+            i = i + 1
+#Map
+    if len(aircrafts) == 0 or len(airports) == 0:
+        print("No data available")
+        return -1
+    # Update schengen.
+    i = 0
+    while i < len(airports):
+        SetSchengen(airports[i])
+        i += 1
+    dest_airport = None
+    i = 0
+    while i < len(airports):
+        if airports[i].icao == "LEBL":
+            dest_airport = airports[i]
+        i += 1
+    if dest_airport is None:
+        print("Destination airport LEBL not found")
+        return -1
+    try:
+        with open("FlightsMapSHORT.kml", "w") as file:
+            file.write('<?xml version="1.0" encoding="UTF-8"?>\n')
+            file.write('<kml xmlns="http://www.opengis.net/kml/2.2">\n')
+            file.write('<Document>\n')
+            i = 0
+            while i < len(aircrafts):
+                aircraft = aircrafts[i]
+                origin_code = aircraft.origin_airport
+                # Search airport of origin.
+                origin_airport = None
+                j = 0
+                while j < len(airports):
+                    if airports[j].icao == origin_code:
+                        origin_airport = airports[j]
+                    j += 1
+                if origin_airport is None:
+                    i += 1
+                    continue
+                # Color.
+                if origin_airport.schengen:
+                    color = "ff00ff00"
+                else:
+                    color = "ff0000ff"
+                file.write("<Placemark>\n")
+                file.write("<Style>\n")
+                file.write("<LineStyle>\n")
+                file.write("<color>" + color + "</color>\n")
+                file.write("<width>2</width>\n")
+                file.write("</LineStyle>\n")
+                file.write("</Style>\n")
+                file.write("<LineString>\n")
+                file.write("<coordinates>\n")
+                file.write(str(origin_airport.longitude) + "," + str(origin_airport.latitude) + ",0 " + str(
+                    dest_airport.longitude) + "," + str(dest_airport.latitude) + ",0\n")
+                file.write("</coordinates>\n")
+                file.write("</LineString>\n")
+                file.write("</Placemark>\n")
+                i += 1
+            file.write("</Document>\n")
+            file.write("</kml>\n")
+        print("File 'FlightsMapSHORT.kml' created")
+        return shortdistance
+    except:
+        return -1
+
 #Función examen.
 def PlotAirlinesAvsE(aircrafts):
         numE=0
@@ -320,7 +432,16 @@ if __name__ == "__main__":
         print("Fail")
     else:
         print("Success")
+    print(str(len(aircrafts)) + " aircrafts")
+    sd=ShortDistanceArrivalsMaps(aircrafts, airports)
+    if sd == -1:
+        print("Fail")
+    else:
+        print("Success: " + str(len(aircrafts)) + " aircrafts remaining")
+        print(str(len(sd)) +" aircrafts deleted.")
+    '''
     PlotArrivals(aircrafts)
     PlotAirlines(aircrafts)
     PlotFlightsType(aircrafts)
     PlotAirlinesAvsE(aircrafts)
+    '''
