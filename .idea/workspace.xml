@@ -4,8 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cbe9e265-e7b8-4247-a1ff-320ae310f2fd" name="Changes" comment="comentario al final">
+    <list default="true" id="cbe9e265-e7b8-4247-a1ff-320ae310f2fd" name="Changes" comment="Arregladas ventanas emergentes">
+      <change beforePath="$PROJECT_DIR$/.idea/Airport Management.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Airport Management.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LEBL.py" beforeDir="false" afterPath="$PROJECT_DIR$/LEBL.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/interface.py" beforeDir="false" afterPath="$PROJECT_DIR$/interface.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,12 +30,12 @@
     &quot;assignee&quot;: &quot;fergam-beep&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/davidpenalver/Airport_Management.git&quot;,
-    &quot;accountId&quot;: &quot;b220318c-a98e-458f-b34c-11d490d11076&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/davidpenalver/Airport_Management.git",
+    "accountId": "074b9ec5-4738-4c78-b401-aa656b7e8664"
   }
-}</component>
+}]]></component>
   <component name="McpProjectServerCommands">
     <commands />
     <urls />
@@ -44,23 +48,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;Python.LEBL.executor&quot;: &quot;Run&quot;,
-    &quot;Python.aircraft.executor&quot;: &quot;Run&quot;,
-    &quot;Python.interface.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;#3 on Version__3&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
-    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Python.LEBL.executor": "Run",
+    "Python.aircraft.executor": "Run",
+    "Python.interface.executor": "Run",
+    "RunOnceActivity.MCP Project settings loaded": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
+    "git-widget-placeholder": "#3 on Version__3",
+    "ignore.virus.scanning.warn.message": "true",
+    "junie.onboarding.icon.badge.shown": "true",
+    "to.speed.mode.migration.done": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <module name="Airport_Management" />
@@ -198,7 +202,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-python-sdk-2653e85de345-6d6dccd035ac-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-253.31033.139" />
+        <option value="bundled-python-sdk-4762d8aabb82-6d6dccd035ac-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-253.30387.173" />
       </set>
     </attachedChunks>
   </component>
@@ -242,36 +246,11 @@
       <option name="project" value="LOCAL" />
       <updated>1778341114170</updated>
     </task>
-    <task id="LOCAL-00005" summary="Arregladas ventanas emergentes">
-      <option name="closed" value="true" />
-      <created>1778347574744</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1778347574745</updated>
-    </task>
-    <task id="LOCAL-00006" summary="comentario al final">
-      <option name="closed" value="true" />
-      <created>1778347780654</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1778347780654</updated>
-    </task>
-    <task id="LOCAL-00007" summary="comentario al final">
-      <option name="closed" value="true" />
-      <created>1778423101174</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1778423101174</updated>
-    </task>
-    <option name="localTasksCounter" value="8" />
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Arregladas ventanas emergentes" />
-    <MESSAGE value="comentario al final" />
-    <option name="LAST_COMMIT_MESSAGE" value="comentario al final" />
+    <option name="LAST_COMMIT_MESSAGE" value="Arregladas ventanas emergentes" />
   </component>
 </project>
