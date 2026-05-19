@@ -264,6 +264,7 @@ def LongDistanceArrivals(aircrafts, airports):
         i=i+1
     return longdistance
 
+'''
 #Exam function: delete arrivals from from less than 1000km away and show the rest of arrivals on Google Earth.
 def ShortDistanceArrivalsMaps(aircrafts, airports):
 #Distance
@@ -404,7 +405,7 @@ def PlotAirlinesAvsE(aircrafts):
         plt.title("Comparison airlines with first letter A vs E")
         plt.show()
         return
-
+'''
 # test section
 if __name__ == "__main__":
     from airport import *

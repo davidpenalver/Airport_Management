@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cbe9e265-e7b8-4247-a1ff-320ae310f2fd" name="Changes" comment="espacios quitados">
+    <list default="true" id="cbe9e265-e7b8-4247-a1ff-320ae310f2fd" name="Changes" comment="examen David">
+      <change beforePath="$PROJECT_DIR$/.idea/Airport Management.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Airport Management.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/aircraft.py" beforeDir="false" afterPath="$PROJECT_DIR$/aircraft.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/interface.py" beforeDir="false" afterPath="$PROJECT_DIR$/interface.py" afterDir="false" />
@@ -61,9 +63,16 @@
     &quot;git-widget-placeholder&quot;: &quot;#3 on Version__3&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/dpena/Desktop&quot;,
     &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\dpena\Desktop" />
+      <recent name="C:\Users\dpena\PycharmProjects\Airport Management" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <module name="Airport_Management" />
@@ -277,12 +286,21 @@
       <option name="project" value="LOCAL" />
       <updated>1778582270705</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="examen David">
+      <option name="closed" value="true" />
+      <created>1778585184694</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1778585184694</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Arregladas ventanas emergentes" />
     <MESSAGE value="espacios quitados" />
-    <option name="LAST_COMMIT_MESSAGE" value="espacios quitados" />
+    <MESSAGE value="examen David" />
+    <option name="LAST_COMMIT_MESSAGE" value="examen David" />
   </component>
 </project>
