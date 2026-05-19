@@ -434,13 +434,14 @@ if __name__ == "__main__":
     else:
         print("Success")
     print(str(len(aircrafts)) + " aircrafts")
+    '''
     sd=ShortDistanceArrivalsMaps(aircrafts, airports)
     if sd == -1:
         print("Fail")
     else:
         print("Success: " + str(len(aircrafts)) + " aircrafts remaining")
         print(str(len(sd)) +" aircrafts deleted.")
-    '''
+    
     PlotArrivals(aircrafts)
     PlotAirlines(aircrafts)
     PlotFlightsType(aircrafts)
