@@ -8,7 +8,7 @@ class Aircraft:
         self.origin_airport = origin_airport
         self.landing_time = landing_time
         self.airline_company = airline_company
-#Reconstruction of V4.
+#Reconstruction for V4.
         self.destination_airport = destination_airport
         self.departure_time = departure_time
 
