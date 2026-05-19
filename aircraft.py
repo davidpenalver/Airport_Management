@@ -3,11 +3,14 @@ import matplotlib.pyplot as plt
 from airport import *
 #Aircraft class
 class Aircraft:
-    def __init__(self, aircraft_id="", origin_airport="", landing_time="", airline_company=""):
+    def __init__(self, aircraft_id="", origin_airport="", landing_time="", airline_company="", destination_airport="", departure_time=""):
         self.aircraft_id = aircraft_id
         self.origin_airport = origin_airport
         self.landing_time = landing_time
         self.airline_company = airline_company
+#Reconstruction of V4.
+        self.destination_airport = destination_airport
+        self.departure_time = departure_time
 
 #Function 1: Return arrivals information.
 def LoadArrivals(filename):
@@ -264,8 +267,45 @@ def LongDistanceArrivals(aircrafts, airports):
         i=i+1
     return longdistance
 
+#Functions V4:
+#Function 1: Load departures and return list only with departures info of each aircraft.
+def LoadDepartures(filename):
+    departures=[]
+    try:
+        with open(filename, "r") as file:
+            file.readline()
+            for line in file:
+                parts = line.split()
+                if len(parts)!=4:
+                    continue
+                aircraft_id = parts[0]
+                destination=parts[1]
+                time=parts[2]
+                airline=parts[3]
+                if len(time)<3 or time[2]!=":":
+                    continue
+                try:
+                    h, m=time.split(':')
+                    h, m=int(h), int(m)
+                    if (h<0 or h>23) or (m<0 or m>59):
+                        continue
+                except:
+                    continue
+                departure=Aircraft(aircraft_id,"","",airline,destination,time)
+                departures.append(departure)
+    except:
+        return []
+    return departures
+
+#Function 2: Final list with all the info of the aircraft.
+def MergeMovements (aircrafts, departures):
+    if len(aircrafts)==0 or len(departures)==0:
+        return -1
+    result=[]
+
+
 '''
-#Exam function: delete arrivals from from less than 1000km away and show the rest of arrivals on Google Earth.
+#Exam function: delete arrivals from less than 1000km away and show the rest of arrivals on Google Earth.
 def ShortDistanceArrivalsMaps(aircrafts, airports):
 #Distance
     import math
