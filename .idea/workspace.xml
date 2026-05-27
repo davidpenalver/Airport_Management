@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cbe9e265-e7b8-4247-a1ff-320ae310f2fd" name="Changes" comment="examen David">
+      <change afterPath="$PROJECT_DIR$/Departures.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/aircraft.py" beforeDir="false" afterPath="$PROJECT_DIR$/aircraft.py" afterDir="false" />
     </list>
@@ -60,14 +61,14 @@
     "git-widget-placeholder": "Version__4",
     "ignore.virus.scanning.warn.message": "true",
     "junie.onboarding.icon.badge.shown": "true",
-    "last_opened_file_path": "C:/Users/dpena/Desktop",
+    "last_opened_file_path": "C:/Users/dpena/PycharmProjects/Airport Management",
     "to.speed.mode.migration.done": "true"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\dpena\Desktop" />
       <recent name="C:\Users\dpena\PycharmProjects\Airport Management" />
+      <recent name="C:\Users\dpena\Desktop" />
     </key>
   </component>
   <component name="RunManager">
@@ -315,7 +316,31 @@
       <option name="project" value="LOCAL" />
       <updated>1779182126352</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="examen David">
+      <option name="closed" value="true" />
+      <created>1779185580552</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1779185580552</updated>
+    </task>
+    <task id="LOCAL-00014" summary="examen David">
+      <option name="closed" value="true" />
+      <created>1779185604420</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1779185604420</updated>
+    </task>
+    <task id="LOCAL-00015" summary="examen David">
+      <option name="closed" value="true" />
+      <created>1779185637248</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1779185637248</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">

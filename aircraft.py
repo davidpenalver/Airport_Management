@@ -302,7 +302,60 @@ def MergeMovements (aircrafts, departures):
     if len(aircrafts)==0 or len(departures)==0:
         return -1
     result=[]
+    used_departures=[]
+#Merge arrivals with compatible departures.
+    i=0
+    while i<len(aircrafts):
+        arrival=aircrafts[i]
+        merged=False
+        j=0
+        while j<len(departures) and not merged:
+            departure = departures[j]
+#Same aircraft and departure not used yet.
+            if departure not in used_departures:
+                if arrival.aircraft_id==departure.aircraft_id:
+#Compare.
+                    arrival_h, arrival_m=arrival.landing_time.split(":")
+                    departure_h, departure_m=departure.departure_time.split(":")
+                    arrival_minutes=int(arrival_h) * 60 + int(arrival_m)
+                    departure_minutes=int(departure_h) * 60 + int(departure_m)
+#Compatible times.
+                    if arrival_minutes<departure_minutes:
+                        aircraft=Aircraft(arrival.aircraft_id,arrival.origin_airport,arrival.landing_time,arrival.airline_company,departure.destination_airport,departure.departure_time)
+                        result.append(aircraft)
+                        used_departures.append(departure)
+                        merged=True
+            j+=1
+#Arrival without departure.
+        if not merged:
+            aircraft=Aircraft(arrival.aircraft_id,arrival.origin_airport,arrival.landing_time,arrival.airline_company,"","")
+            result.append(aircraft)
+        i+=1
+#Add departure without arrival.
+    j=0
+    while j<len(departures):
+        departure=departures[j]
+        if departure not in used_departures:
+            aircraft=Aircraft(departure.aircraft_id,"","",departure.airline_company,departure.destination_airport,departure.departure_time)
+            result.append(aircraft)
+        j+=1
+    return result
 
+#Function 3: List of aircraft with only departure information.
+def NightAircraft(aircrafts):
+    if len(aircrafts)==0:
+        return -1
+    night_aircrafts=[]
+    i = 0
+    while i<len(aircrafts):
+        aircraft=aircrafts[i]
+#No arrival information available.
+        if aircraft.origin_airport=="" and aircraft.landing_time=="":
+#Has departure information available.
+            if aircraft.destination_airport!="" and aircraft.departure_time!="":
+                night_aircrafts.append(aircraft)
+        i+=1
+    return night_aircrafts
 
 '''
 #Exam function: delete arrivals from less than 1000km away and show the rest of arrivals on Google Earth.
