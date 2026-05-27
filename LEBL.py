@@ -592,6 +592,83 @@ def AssignGate(bcn, aircraft):
         j += 1
     return -1
 
+#Function 8: Free the gate assigned to an aircraft.
+def FreeGate(bcn, id):
+    if bcn is None or id == "":
+        return -1
+    #Search through all terminals, areas and gates.
+    i = 0
+    while i < len(bcn.terminals):
+        terminal = bcn.terminals[i]
+        j = 0
+        while j < len(terminal.boarding_areas):
+            area = terminal.boarding_areas[j]
+            k = 0
+            while k < len(area.gates):
+                gate = area.gates[k]
+                #If the gate is occupied by this aircraft, free it.
+                if gate.occupied and gate.aircraft_id == id:
+                    gate.occupied = False
+                    gate.aircraft_id = None
+                    return 0
+                k += 1
+            j += 1
+        i += 1
+    #Aircraft not found in any gate.
+    return -1
+
+#Function 9: Assign gates to aircrafts landing in a one-hour period.
+def AssignGatesAtTime(bcn, aircrafts, time):
+    if bcn is None or len(aircrafts) == 0:
+        return -1
+    #Get the hour of the time received as integer.
+    try:
+        h = int(time.split(":")[0])
+        if h < 0 or h > 23:
+            return -1
+    except:
+        return -1
+
+    #Free gates of aircrafts that have already departed before this hour.
+    i = 0
+    while i < len(aircrafts):
+        aircraft = aircrafts[i]
+        if aircraft.departure_time != "":
+            try:
+                dep_h = int(aircraft.departure_time.split(":")[0])
+                dep_m = int(aircraft.departure_time.split(":")[1])
+                dep_minutes = dep_h * 60 + dep_m
+                period_minutes = h * 60
+                #If the aircraft departed before this period, free its gate.
+                if dep_minutes <= period_minutes:
+                    FreeGate(bcn, aircraft.aircraft_id)
+            except:
+                pass
+        i += 1
+
+    #Assign gates to aircrafts landing during this one-hour period.
+    not_assigned = 0
+    i = 0
+    while i < len(aircrafts):
+        aircraft = aircrafts[i]
+        if aircraft.landing_time != "":
+            try:
+                arr_h = int(aircraft.landing_time.split(":")[0])
+                arr_m = int(aircraft.landing_time.split(":")[1])
+                arr_minutes = arr_h * 60 + arr_m
+                period_start = h * 60
+                period_end = (h + 1) * 60
+                #If the aircraft lands within this one-hour period, assign a gate.
+                if period_start <= arr_minutes < period_end:
+                    result = AssignGate(bcn, aircraft)
+                    if result == -1:
+                        not_assigned += 1
+            except:
+                pass
+        i += 1
+
+    return not_assigned
+
 #TEST CODE:
 if __name__ == "__main__":
 #PROBAR LoadAirportStructure

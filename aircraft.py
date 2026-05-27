@@ -470,7 +470,7 @@ def ShortDistanceArrivalsMaps(aircrafts, airports):
     except:
         return -1
 
-#Función examen.
+#Función examen.    
 def PlotAirlinesAvsE(aircrafts):
         numE=0
         numA=0

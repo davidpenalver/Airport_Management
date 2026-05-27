@@ -11,21 +11,6 @@ canvas=None
 root=None
 bcn=None
 
-'''
-#Function exam:
-def short_distance_arrivals_maps():
-    result = ShortDistanceArrivalsMaps(aircrafts,airports)
-    if len(aircrafts) == 0:
-        messagebox.showerror("Error", "List not created.")
-    else:
-        messagebox.showinfo("Success", "List successfully created. " + str(len(aircrafts)) + " aircrafts remaining.")
-    if result == -1:
-        messagebox.showerror("Error", "Map not created.")
-    else:
-        messagebox.showinfo("Success", "Map successfully created.")
-        os.system("Start FlightsMapSHORT.kml")
-'''
-
 #Functions of the interface V3:
 def assign_gate():
     global bcn,aircrafts
@@ -260,7 +245,7 @@ entry_long.grid(row=2, column=1)
 
 # Buttons.
 
-tk.Button(root,text="Load Airports", command=load_airports).grid(row=3, column=1)
+tk.Button(root,text="Load Airports", command=load_airports).grid(row=6, column=1)
 tk.Button(root,text="Add Airport", command=add_airport).grid(row=3, column=0)
 tk.Button(root,text="Remove Airport", command=remove_airport).grid(row=4, column=0)
 tk.Button(root,text="Show Airports", command=show_aiports).grid(row=4, column=1)
