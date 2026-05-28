@@ -280,7 +280,7 @@ root.grid_columnconfigure(1, weight=1)
 root.geometry("1200x650")
 root.resizable(True, True)
 root.title("Airport Manager")
-root.configure(bg="#dfe6e9")
+root.configure(bg="#ffffff")
 
 title_frame = tk.Frame(root,bg="#2d3436",pady=10)
 title_frame.grid(row=0,column=0,columnspan=2,sticky="ew")
@@ -289,24 +289,24 @@ title_label.pack()
 subtitle_label = tk.Label(title_frame,text="LEBL arrivals, departures and gate management",bg="#2d3436",fg="#dfe6e9",font=("Arial", 10))
 subtitle_label.pack()
 
-left_canvas = tk.Canvas(root,bg="#dfe6e9",highlightthickness=0, width=260)
+left_canvas = tk.Canvas(root,bg="#ffffff",highlightthickness=0, width=260)
 left_canvas.grid(row=1,column=0,sticky="ns")
 left_scroll = tk.Scrollbar(root,orient="vertical",command=left_canvas.yview)
 left_scroll.grid(row=1,column=0,sticky="nse", padx=(245,0))
 left_canvas.configure(yscrollcommand=left_scroll.set)
-left_panel = tk.Frame(left_canvas,bg="#dfe6e9")
+left_panel = tk.Frame(left_canvas,bg="#ffffff") #dfe6e9
 left_canvas.create_window((0,0),window=left_panel,anchor="nw", width=250)
 
 def update_scroll(event):
     left_canvas.configure(scrollregion=left_canvas.bbox("all"))
 left_panel.bind("<Configure>",update_scroll)
 
-right_canvas = tk.Canvas(root,bg="#f5f6fa",highlightthickness=0)
+right_canvas = tk.Canvas(root,bg="#ffffff",highlightthickness=0)
 right_canvas.grid(row=1,column=1,sticky="nsew")
 right_scroll = tk.Scrollbar(root,orient="vertical",command=right_canvas.yview)
 right_scroll.grid(row=1,column=2,sticky="ns")
 right_canvas.configure(yscrollcommand=right_scroll.set)
-right_panel = tk.Frame(right_canvas,bg="#f5f6fa")
+right_panel = tk.Frame(right_canvas,bg="#ffffff") #f5f6fa
 right_window = right_canvas.create_window((0,0),window=right_panel,anchor="nw")
 
 def update_right_scroll(event):
