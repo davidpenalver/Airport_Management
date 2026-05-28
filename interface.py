@@ -283,7 +283,7 @@ root.title("Airport Manager")
 root.configure(bg="#ffffff")
 
 title_frame = tk.Frame(root,bg="#2d3436",pady=10)
-title_frame.grid(row=0,column=0,columnspan=2,sticky="ew")
+title_frame.grid(row=0,column=0,columnspan=3,sticky="ew")
 title_label = tk.Label(title_frame,text="Airport Management System",bg="#2d3436",fg="white",font=("Arial", 18, "bold"))
 title_label.pack()
 subtitle_label = tk.Label(title_frame,text="LEBL arrivals, departures and gate management",bg="#2d3436",fg="#dfe6e9",font=("Arial", 10))
