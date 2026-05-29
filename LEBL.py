@@ -672,6 +672,122 @@ def AssignGatesAtTime(bcn, aircrafts, time):
 
     return not_assigned
 
+#Function extra: Generate a TXT report for a specific gate and ask where to save it.
+def GateReport(bcn, aircrafts, gate_input):
+    gate_name = gate_input
+    if gate_name == "":
+        return -1
+
+    # buscamos la puerta por el nombre en toda la estructura
+    found_gate = None
+    found_area = None
+    found_terminal = None
+    i = 0
+    while i < len(bcn.terminals) and found_gate is None:
+        terminal = bcn.terminals[i]
+        j = 0
+        while j < len(terminal.boarding_areas) and found_gate is None:
+            area = terminal.boarding_areas[j]
+            k = 0
+            while k < len(area.gates) and found_gate is None:
+                gate = area.gates[k]
+                # si el nombre coincide ya la tenemos
+                if gate.name == gate_name:
+                    found_gate = gate
+                    found_area = area
+                    found_terminal = terminal
+                k += 1
+            j += 1
+        i += 1
+
+    # si no encontramos nada nos vamos
+    if found_gate is None:
+        return -1
+
+    # miramos que aviones son compatibles con esta puerta
+    # para eso comprobamos que la aerolinea este en el mismo terminal
+    # y que el origen sea del mismo tipo schengen que el area
+    compatible = []
+    i = 0
+    while i < len(aircrafts):
+        ac = aircrafts[i]
+        ac_terminal = SearchTerminal(bcn, ac.airline_company)
+        if ac_terminal == found_terminal.name:
+            ac_schengen = IsSchengenAirport(ac.origin_airport)
+            if ac_schengen and found_area.type == "Schengen":
+                compatible.append(ac)
+            elif not ac_schengen and found_area.type == "non-Schengen":
+                compatible.append(ac)
+        i += 1
+
+    # ordenamos los compatibles por hora de llegada, burbuja de toda la vida
+    i = 0
+    while i < len(compatible) - 1:
+        j = 0
+        while j < len(compatible) - 1 - i:
+            try:
+                h1 = int(compatible[j].landing_time.split(":")[0]) * 60 + int(compatible[j].landing_time.split(":")[1])
+                h2 = int(compatible[j+1].landing_time.split(":")[0]) * 60 + int(compatible[j+1].landing_time.split(":")[1])
+                if h1 > h2:
+                    compatible[j], compatible[j+1] = compatible[j+1], compatible[j]
+            except:
+                # si el tiempo esta mal lo dejamos donde esta
+                pass
+            j += 1
+        i += 1
+
+    # creamos el txt en la carpeta del proyecto
+    filename = "Gate" + gate_name + ".txt"
+    try:
+        with open(filename, "w") as f:
+            f.write("=" * 55 + "\n")
+            f.write("  GATE REPORT: " + gate_name + "\n")
+            f.write("  Barcelona El Prat Airport (LEBL)\n")
+            f.write("=" * 55 + "\n\n")
+
+            # info basica de la puerta
+            f.write("--- GATE INFORMATION ---\n")
+            f.write("Gate Name    : " + found_gate.name + "\n")
+            f.write("Terminal     : " + found_terminal.name + "\n")
+            f.write("Boarding Area: " + found_area.name + "\n")
+            f.write("Area Type    : " + found_area.type + "\n")
+            if found_gate.occupied:
+                f.write("Status       : Occupied\n")
+                f.write("Aircraft     : " + str(found_gate.aircraft_id) + "\n")
+            else:
+                f.write("Status       : Free\n")
+                f.write("Aircraft     : -\n")
+
+            # lista de vuelos que podrian usar esta puerta hoy
+            f.write("\n--- COMPATIBLE FLIGHTS FOR THIS GATE TODAY ---\n")
+            f.write("(Same terminal: " + found_terminal.name + " | Area type: " + found_area.type + ")\n\n")
+            if len(compatible) == 0:
+                f.write("No compatible flights found.\n")
+            else:
+                # cabecera de la tabla
+                f.write("{:<12} {:<8} {:<8} {:<8} {:<12} {:<10}\n".format(
+                    "Aircraft", "Origin", "Arrival", "Airline", "Destination", "Departure"))
+                f.write("-" * 60 + "\n")
+                i = 0
+                while i < len(compatible):
+                    ac = compatible[i]
+                    f.write("{:<12} {:<8} {:<8} {:<8} {:<12} {:<10}\n".format(
+                        ac.aircraft_id if ac.aircraft_id else "-",
+                        ac.origin_airport if ac.origin_airport else "-",
+                        ac.landing_time if ac.landing_time else "-",
+                        ac.airline_company if ac.airline_company else "-",
+                        ac.destination_airport if ac.destination_airport else "-",
+                        ac.departure_time if ac.departure_time else "-",
+                    ))
+                    i += 1
+
+            f.write("\n" + "=" * 55 + "\n")
+            f.write("  Report by Airport Management System - LEBL\n")
+            f.write("=" * 55 + "\n")
+        return filename
+    except:
+        return -1
+
 #TEST CODE:
 if __name__ == "__main__":
 #PROBAR LoadAirportStructure

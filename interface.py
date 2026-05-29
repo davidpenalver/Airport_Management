@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import filedialog, messagebox
+from tkinter import filedialog, messagebox, simpledialog
 # from airport import *
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import os
@@ -102,6 +102,46 @@ def plot_gate_occupancy():
     gates=GateOccupancy(bcn)
     fig=PlotGateOccupancy(gates)
     show_plot(fig)
+
+def gate_report():
+    global bcn, aircrafts
+    if bcn is None:
+        messagebox.showerror("Error", "Load airport structure first.")
+        return
+    if len(aircrafts) == 0:
+        messagebox.showerror("Error", "No aircrafts loaded.")
+        return
+
+    # cogemos lo que haya escrito en el campo de arriba
+    gate_name = entry_code.get().strip()
+    if gate_name == "":
+        messagebox.showerror("Error", "Enter a gate name in the ICAO / Gate field.")
+        return
+
+    # llamamos a la funcion que genera el txt
+    filename = GateReport(bcn, aircrafts, gate_name)
+    if filename == -1:
+        messagebox.showerror("Error", "Gate not found or could not generate report.")
+        return
+
+    # preguntamos al usuario donde quiere guardarlo
+    save_path = filedialog.asksaveasfilename(
+        defaultextension=".txt",
+        initialfile=filename,
+        filetypes=[("Text files", "*.txt")]
+    )
+
+    # si cierra el dialogo sin elegir nada no hacemos nada
+    if save_path == "":
+        return
+
+    import os
+    try:
+        # movemos el archivo al sitio que eligio el usuario
+        os.replace(filename, save_path)
+        messagebox.showinfo("Success", "TXT report saved successfully.")
+    except:
+        messagebox.showerror("Error", "Could not move file to selected location.")
 
 def load_airport_structure():
     global bcn
@@ -328,7 +368,7 @@ v4_frame=tk.LabelFrame(left_panel, text="🛫 V4", padx=10, pady=5, bg="#4E248F"
 v4_frame.pack(fill="x")
 
 #INPUTS.
-tk.Label(input_frame,text="ICAO code", bg="#5B00F2").grid(row=0,column=0)
+tk.Label(input_frame,text="ICAO / Gate", bg="#5B00F2").grid(row=0,column=0)
 entry_code=tk.Entry(input_frame)
 entry_code.grid(row=0, column=1)
 tk.Label(input_frame,text="Latitude", bg="#5B00F2").grid(row=1,column=0)
@@ -361,6 +401,7 @@ tk.Button(gate_frame, text="Load Aiport Structure",command=load_airport_structur
 tk.Button(gate_frame, text="Assign Gates",command=assign_gate, width=22,font=("Arial", 10, "bold"),relief="flat",pady=5,cursor="hand2").pack(fill="x", pady=2)
 tk.Button(gate_frame, text="Show Gate Occupancy",command=gate_occupancy, width=22,font=("Arial", 10, "bold"),relief="flat",pady=5,cursor="hand2").pack(fill="x", pady=2)
 tk.Button(gate_frame, text="Plot Gate Occupancy",command=plot_gate_occupancy, width=22,font=("Arial", 10, "bold"),relief="flat",pady=5,cursor="hand2").pack(fill="x", pady=2)
+tk.Button(gate_frame, text="Gate TXT Report",command=gate_report, width=22,font=("Arial", 10, "bold"),relief="flat",pady=5,cursor="hand2").pack(fill="x", pady=2)
 
 #Version 4 Buttons.
 tk.Button(v4_frame, text="Load Departures",command=load_departures, width=22,font=("Arial", 10, "bold"),relief="flat",pady=5,cursor="hand2").pack(fill="x", pady=2)
