@@ -592,6 +592,9 @@ def AssignGate(bcn, aircraft):
         j += 1
     return -1
 
+
+#V4
+
 #Function 8: Free the gate assigned to an aircraft.
 def FreeGate(bcn, id):
     if bcn is None or id == "":
