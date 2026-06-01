@@ -125,6 +125,18 @@ def assign_gates_at_time():
         text.insert(tk.END, str(gates[i]) + "\n")
         i += 1
 
+def airport_gate_map():
+    global aircrafts, bcn
+    if len(aircrafts) == 0:
+        messagebox.showerror("Error", "Load and merge flights first.")
+        return
+    if bcn is None:
+        messagebox.showerror("Error", "Load airport structure first.")
+        return
+    plt_obj = AirportGateMap(aircrafts, bcn)
+    fig = plt_obj.gcf()
+    show_plot(fig)
+
 #Functions of the interface V3:
 def assign_gate():
     global bcn,aircrafts
@@ -480,6 +492,8 @@ tk.Button(v4_frame, text="Assign night gates",command=assign_night_gates, width=
 tk.Button(v4_frame, text="Plot day occupancy",command=plot_day_occupancy, width=22,font=("Arial", 10, "bold"),relief="flat",pady=5,cursor="hand2").pack(fill="x", pady=2)
 tk.Button(v4_frame, text="Free Gate",command=free_gate,width=22, font=("Arial", 10, "bold"),relief="flat", pady=5, cursor="hand2").pack(fill="x", pady=2)
 tk.Button(v4_frame, text="Assign Gates At Time",command=assign_gates_at_time, width=22, font=("Arial", 10, "bold"),relief="flat", pady=5, cursor="hand2").pack(fill="x", pady=2)
+tk.Button(v4_frame, text="Interactive Gate Map",command=airport_gate_map, width=22, font=("Arial", 10, "bold"),relief="flat", pady=5, cursor="hand2").pack(fill="x", pady=2)
+
 
 '''
 #Exam Button.
