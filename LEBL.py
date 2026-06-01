@@ -594,8 +594,26 @@ def AssignGate(bcn, aircraft):
 
 
 #V4
+#Function 4: Assign gates to a list of aricrafts.
+def AssignNightGates(bcn, aircrafts):
+    if len(aircrafts) == 0:
+        print("Error: The aircrafts list is empty.")
+        return -1
+    assigned_count = 0
+    i = 0
+    while i < len(aircrafts):
+        ac = aircrafts[i]
+        if ac.origin_airport != "" and ac.origin_airport != "LEBL":
+            i += 1
+            continue
+        resultado = AssignGate(bcn, ac)
+        if resultado == 0:
+            assigned_count += 1
+        i += 1
+    print(f"Night gates assignment are finished. Total assigned gates: {assigned_count}")
+    return 0
 
-#Function 8: Free the gate assigned to an aircraft.
+#Function 5: Free the gate assigned to an aircraft.
 def FreeGate(bcn, id):
     if bcn is None or id == "":
         return -1
@@ -620,7 +638,7 @@ def FreeGate(bcn, id):
     #Aircraft not found in any gate.
     return -1
 
-#Function 9: Assign gates to aircrafts landing in a one-hour period.
+#Function 6: Assign gates to aircrafts landing in a one-hour period.
 def AssignGatesAtTime(bcn, aircrafts, time):
     if bcn is None or len(aircrafts) == 0:
         return -1

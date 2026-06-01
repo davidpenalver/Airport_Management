@@ -57,6 +57,26 @@ def night_aircraft():
             i+=1
         messagebox.showinfo("Success",str(len(night_aircrafts)) + " night aircraft found.")
 
+def assign_night_gates():
+    global bcn, aircrafts
+    if bcn is None:
+        messagebox.showerror("Error", "Load airport structure first.")
+        return
+    resultado = AssignNightGates(bcn, aircrafts)
+    if resultado == -1:
+        messagebox.showerror("Error", "Aircrafts list is empty.")
+    else:
+        messagebox.showinfo("Success", "Night gates assignment process completed.")
+
+def plot_day_occupancy():
+    global aircrafts
+    if len(aircrafts) == 0:
+        messagebox.showerror("Error", "No aircrafts loaded.")
+        return
+    plt_obj=PlotDayOccupancy(aircrafts)
+    fig = plt_obj.gcf()
+    show_plot(fig)
+
 #Functions of the interface V3:
 def assign_gate():
     global bcn,aircrafts
@@ -77,7 +97,6 @@ def assign_gate():
         else:
             failed += 1
         i+=1
-
     messagebox.showinfo("Result","Gates assigned: " + str(assigned) + "\nFailed: " + str(failed))
 
 def gate_occupancy():
@@ -103,6 +122,7 @@ def plot_gate_occupancy():
     fig=PlotGateOccupancy(gates)
     show_plot(fig)
 
+#EXTRA FUNCTION 1:
 def gate_report():
     global bcn, aircrafts
     if bcn is None:
@@ -164,7 +184,7 @@ def search_terminal():
     else:
         messagebox.showinfo("Result", "Terminal: " + result)
 
-# Functions of the plots:
+# Function of the plots:
 def show_plot(fig):
     global canvas
     if canvas is not None:
@@ -172,6 +192,7 @@ def show_plot(fig):
     canvas = FigureCanvasTkAgg(fig, master=plot_frame)
     canvas.draw()
     canvas.get_tk_widget().pack(fill="both", expand=True)
+
 # Functions of the interface V2.
 def load_aircrafts():
     global aircrafts
@@ -407,6 +428,8 @@ tk.Button(gate_frame, text="Gate TXT Report",command=gate_report, width=22,font=
 tk.Button(v4_frame, text="Load Departures",command=load_departures, width=22,font=("Arial", 10, "bold"),relief="flat",pady=5,cursor="hand2").pack(fill="x", pady=2)
 tk.Button(v4_frame, text="Merge Movements",command=merge_movements, width=22,font=("Arial", 10, "bold"),relief="flat",pady=5,cursor="hand2").pack(fill="x", pady=2)
 tk.Button(v4_frame, text="Show Night Aircrafts",command=night_aircraft, width=22,font=("Arial", 10, "bold"),relief="flat",pady=5,cursor="hand2").pack(fill="x", pady=2)
+tk.Button(v4_frame, text="Assign night gates",command=assign_night_gates, width=22,font=("Arial", 10, "bold"),relief="flat",pady=5,cursor="hand2").pack(fill="x", pady=2)
+tk.Button(v4_frame, text="Plot day occupancy",command=plot_day_occupancy, width=22,font=("Arial", 10, "bold"),relief="flat",pady=5,cursor="hand2").pack(fill="x", pady=2)
 
 '''
 #Exam Button.

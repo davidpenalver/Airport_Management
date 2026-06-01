@@ -357,6 +357,41 @@ def NightAircraft(aircrafts):
         i+=1
     return night_aircrafts
 
+#Function 7: Plot the assgined gates per terminal per hour.
+def PlotDayOccupancy(aircrafts):
+    import matplotlib.pyplot as plt
+    if len(aircrafts)==0:
+        print("No aircrafts found")
+        return -1
+    morning=0  #06:00 a 11:59
+    afternoon=0  #12:00 a 17:59
+    evening=0  #18:00 a 23:59
+    night=0  #00:00 a 05:59
+    i=0
+    while i<len(aircrafts):
+        ac=aircrafts[i]
+        try:
+            h=int(ac.landing_time.split(':')[0])
+            if h>=6 and h<12:
+                morning+=1
+            elif h>=12 and h<18:
+                afternoon+=1
+            elif h>=18 and h<=23:
+                evening+=1
+            elif h>=0 and h<6:
+                night+=1
+        except:
+            pass
+        i+=1
+    vx=["Morning (6-12h)", "Afternoon (12-18h)", "Evening (18-24h)", "Night (0-6h)"]
+    vy=[morning, afternoon, evening, night]
+    plt.figure()
+    plt.bar(vx, vy, color='lightblue', edgecolor='black')
+    plt.xlabel("Time Slots")
+    plt.ylabel("Number of Arrivals")
+    plt.title("Airport Occupancy per Time Slot")
+    return plt
+
 '''
 #Exam function: delete arrivals from less than 1000km away and show the rest of arrivals on Google Earth.
 def ShortDistanceArrivalsMaps(aircrafts, airports):
