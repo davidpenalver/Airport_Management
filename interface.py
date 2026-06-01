@@ -133,9 +133,7 @@ def airport_gate_map():
     if bcn is None:
         messagebox.showerror("Error", "Load airport structure first.")
         return
-    plt_obj = AirportGateMap(aircrafts, bcn)
-    fig = plt_obj.gcf()
-    show_plot(fig)
+    AirportGateMap(aircrafts, bcn)
 
 #Functions of the interface V3:
 def assign_gate():
@@ -439,14 +437,14 @@ right_panel.bind("<Configure>",update_right_scroll)
 
 input_frame = tk.LabelFrame(left_panel,text="📝 Inputs",padx=10,pady=10,bg="#5B00F2",fg="black",font=("Arial", 10, "bold"), bd=0)
 input_frame.pack(fill="x")
+v4_frame=tk.LabelFrame(left_panel, text="🛫 Load Data", padx=10, pady=5, bg="#4E248F",font=("Arial", 10, "bold"), bd=0)
+v4_frame.pack(fill="x")
 airport_frame = tk.LabelFrame(left_panel, text="🌍 Airport", padx=10, pady=10, bg="#5B15D1",font=("Arial", 10, "bold"), bd=0)
 airport_frame.pack(fill="x")
 flight_frame = tk.LabelFrame(left_panel, text="✈️ Flights", padx=10, pady=10, bg="#571DB8",font=("Arial", 10, "bold"), bd=0)
 flight_frame.pack(fill="x")
 gate_frame = tk.LabelFrame(left_panel, text="🚪 Gate Management", padx=10, pady=5, bg="#5222A3",font=("Arial", 10, "bold"), bd=0)
 gate_frame.pack(fill="x")
-v4_frame=tk.LabelFrame(left_panel, text="🛫 V4", padx=10, pady=5, bg="#4E248F",font=("Arial", 10, "bold"), bd=0)
-v4_frame.pack(fill="x")
 
 #INPUTS.
 tk.Label(input_frame,text="ICAO / Gate", bg="#5B00F2").grid(row=0,column=0)
@@ -460,40 +458,39 @@ entry_long=tk.Entry(input_frame)
 entry_long.grid(row=2, column=1)
 
 #Version 1 Buttons.
-tk.Button(airport_frame,text="Load Airports",command=load_airports,width=22,font=("Arial", 10, "bold"),relief="flat",pady=5,cursor="hand2").pack(fill="x", pady=3)
+tk.Button(v4_frame,text="Load Airports",command=load_airports,width=22,font=("Arial", 10, "bold"),relief="flat",pady=5,cursor="hand2").pack(fill="x", pady=3)
+tk.Button(v4_frame, text="Load Aiport Structure",command=load_airport_structure, width=22,font=("Arial", 10, "bold"),relief="flat",pady=5,cursor="hand2").pack(fill="x", pady=2)
 tk.Button(airport_frame,text="Add Airport", command=add_airport, width=22,font=("Arial", 10, "bold"),relief="flat",pady=5,cursor="hand2").pack(fill="x", pady=2)
 tk.Button(airport_frame,text="Remove Airport", command=remove_airport, width=22,font=("Arial", 10, "bold"),relief="flat",pady=5,cursor="hand2").pack(fill="x", pady=2)
 tk.Button(airport_frame,text="Show Airports", command=show_aiports, width=22,font=("Arial", 10, "bold"),relief="flat",pady=5,cursor="hand2").pack(fill="x", pady=2)
 tk.Button(airport_frame,text="Save Schengen Airports", command=save_schengen, width=22,font=("Arial", 10, "bold"),relief="flat",pady=5,cursor="hand2").pack(fill="x", pady=2)
-tk.Button(airport_frame,text="Plot type of airport", command=plot_aiports, width=22,font=("Arial", 10, "bold"),relief="flat",pady=5,cursor="hand2").pack(fill="x", pady=2)
-tk.Button(airport_frame,text="Map Airports", command=map_airports, width=22,font=("Arial", 10, "bold"),relief="flat",pady=5,cursor="hand2").pack(fill="x", pady=2)
+tk.Button(airport_frame,text="Plot Type of airport", command=plot_aiports, width=22,font=("Arial", 10, "bold"),relief="flat",pady=5,cursor="hand2").pack(fill="x", pady=2)
+tk.Button(airport_frame,text="Map of Airports", command=map_airports, width=22,font=("Arial", 10, "bold"),relief="flat",pady=5,cursor="hand2").pack(fill="x", pady=2)
 
 #Version 2 Buttons.
-tk.Button(flight_frame,text="Load Flights", command=load_aircrafts, width=22,font=("Arial", 10, "bold"),relief="flat",pady=5,cursor="hand2").pack(fill="x", pady=2)
-tk.Button(flight_frame,text="Plot Arrivals", command=plot_arrivals, width=22,font=("Arial", 10, "bold"),relief="flat",pady=5,cursor="hand2").pack(fill="x", pady=2)
+tk.Button(v4_frame,text="Load Flights", command=load_aircrafts, width=22,font=("Arial", 10, "bold"),relief="flat",pady=5,cursor="hand2").pack(fill="x", pady=2)
+tk.Button(flight_frame, text="Merge Movements",command=merge_movements, width=22,font=("Arial", 10, "bold"),relief="flat",pady=5,cursor="hand2").pack(fill="x", pady=2)
 tk.Button(flight_frame,text="Save correct format Flights", command=save_flights, width=22,font=("Arial", 10, "bold"),relief="flat",pady=5,cursor="hand2").pack(fill="x", pady=2)
+tk.Button(flight_frame,text="Save Long Distance Arrivals", command=long_distance_arrivals, width=22,font=("Arial", 10, "bold"),relief="flat",pady=5,cursor="hand2").pack(fill="x", pady=2)
+tk.Button(flight_frame,text="Plot Arrivals", command=plot_arrivals, width=22,font=("Arial", 10, "bold"),relief="flat",pady=5,cursor="hand2").pack(fill="x", pady=2)
 tk.Button(flight_frame,text="Plot Flights per Airline", command= plot_airlines, width=22,font=("Arial", 10, "bold"),relief="flat",pady=5,cursor="hand2").pack(fill="x", pady=2)
 tk.Button(flight_frame,text="Plot type of arrivals", command=plot_flights_type, width=22,font=("Arial", 10, "bold"),relief="flat",pady=5,cursor="hand2").pack(fill="x", pady=2)
 tk.Button(flight_frame,text="Trajectories Map", command=map_flights, width=22,font=("Arial", 10, "bold"),relief="flat",pady=5,cursor="hand2").pack(fill="x", pady=2)
-tk.Button(flight_frame,text="Save Long Distance Arrivals", command=long_distance_arrivals, width=22,font=("Arial", 10, "bold"),relief="flat",pady=5,cursor="hand2").pack(fill="x", pady=2)
 
 #Version 3 Buttons.
-tk.Button(gate_frame, text="Load Aiport Structure",command=load_airport_structure, width=22,font=("Arial", 10, "bold"),relief="flat",pady=5,cursor="hand2").pack(fill="x", pady=2)
 tk.Button(gate_frame, text="Assign Gates",command=assign_gate, width=22,font=("Arial", 10, "bold"),relief="flat",pady=5,cursor="hand2").pack(fill="x", pady=2)
 tk.Button(gate_frame, text="Show Gate Occupancy",command=gate_occupancy, width=22,font=("Arial", 10, "bold"),relief="flat",pady=5,cursor="hand2").pack(fill="x", pady=2)
 tk.Button(gate_frame, text="Plot Gate Occupancy",command=plot_gate_occupancy, width=22,font=("Arial", 10, "bold"),relief="flat",pady=5,cursor="hand2").pack(fill="x", pady=2)
 tk.Button(gate_frame, text="Gate TXT Report",command=gate_report, width=22,font=("Arial", 10, "bold"),relief="flat",pady=5,cursor="hand2").pack(fill="x", pady=2)
 
-#Version 4 Buttons.
+#Version 4 Buttons - Some are mixed with other versions to have a clear interface.
 tk.Button(v4_frame, text="Load Departures",command=load_departures, width=22,font=("Arial", 10, "bold"),relief="flat",pady=5,cursor="hand2").pack(fill="x", pady=2)
-tk.Button(v4_frame, text="Merge Movements",command=merge_movements, width=22,font=("Arial", 10, "bold"),relief="flat",pady=5,cursor="hand2").pack(fill="x", pady=2)
-tk.Button(v4_frame, text="Show Night Aircrafts",command=night_aircraft, width=22,font=("Arial", 10, "bold"),relief="flat",pady=5,cursor="hand2").pack(fill="x", pady=2)
-tk.Button(v4_frame, text="Assign night gates",command=assign_night_gates, width=22,font=("Arial", 10, "bold"),relief="flat",pady=5,cursor="hand2").pack(fill="x", pady=2)
-tk.Button(v4_frame, text="Plot day occupancy",command=plot_day_occupancy, width=22,font=("Arial", 10, "bold"),relief="flat",pady=5,cursor="hand2").pack(fill="x", pady=2)
-tk.Button(v4_frame, text="Free Gate",command=free_gate,width=22, font=("Arial", 10, "bold"),relief="flat", pady=5, cursor="hand2").pack(fill="x", pady=2)
-tk.Button(v4_frame, text="Assign Gates At Time",command=assign_gates_at_time, width=22, font=("Arial", 10, "bold"),relief="flat", pady=5, cursor="hand2").pack(fill="x", pady=2)
-tk.Button(v4_frame, text="Interactive Gate Map",command=airport_gate_map, width=22, font=("Arial", 10, "bold"),relief="flat", pady=5, cursor="hand2").pack(fill="x", pady=2)
-
+tk.Button(gate_frame, text="Show Night Aircrafts",command=night_aircraft, width=22,font=("Arial", 10, "bold"),relief="flat",pady=5,cursor="hand2").pack(fill="x", pady=2)
+tk.Button(gate_frame, text="Assign night gates",command=assign_night_gates, width=22,font=("Arial", 10, "bold"),relief="flat",pady=5,cursor="hand2").pack(fill="x", pady=2)
+tk.Button(gate_frame, text="Assign Gates At Time",command=assign_gates_at_time, width=22, font=("Arial", 10, "bold"),relief="flat", pady=5, cursor="hand2").pack(fill="x", pady=2)
+tk.Button(gate_frame, text="Free Gate",command=free_gate,width=22, font=("Arial", 10, "bold"),relief="flat", pady=5, cursor="hand2").pack(fill="x", pady=2)
+tk.Button(gate_frame, text="Plot day occupancy",command=plot_day_occupancy, width=22,font=("Arial", 10, "bold"),relief="flat",pady=5,cursor="hand2").pack(fill="x", pady=2)
+tk.Button(gate_frame, text="Interactive Gate Map",command=airport_gate_map, width=22, font=("Arial", 10, "bold"),relief="flat", pady=5, cursor="hand2").pack(fill="x", pady=2)
 
 '''
 #Exam Button.

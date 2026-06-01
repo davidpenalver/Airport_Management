@@ -571,13 +571,10 @@ def AirportGateMap(aircrafts, bcn):
     GATE_PAD = 0.08   # separación entre puertas
     AREA_PAD = 0.5    # separación entre áreas
     TERM_PAD = 1.2    # separación entre terminales
-    AREA_LABEL_H = 0.5   # altura reservada para el nombre del área
-    TERM_LABEL_H = 0.6   # altura reservada para el nombre del terminal
+    AREA_LABEL_H = 1   # altura reservada para el nombre del área
+    TERM_LABEL_H = 0.2   # altura reservada para el nombre del terminal
 
     # Pre-calcular posición X de cada puerta
-    # gate_positions[(terminal_name, area_name, gate_idx)] = (x, y_base)
-    gate_positions = {}   # se almacena como lista paralela para evitar dict complejo
-
     gp_keys = []   # (t_name, a_name, g_idx)
     gp_x = []
     gp_y = []
@@ -620,12 +617,11 @@ def AirportGateMap(aircrafts, bcn):
     stats_obj = fig.text(0.5, 0.90, "",ha="center", fontsize=9, color="#dfe6e9")
 
     #Dibujar fondos de terminales y áreas (estáticos)
-    # Para cada terminal: fondo oscuro
     t = 0
     while t < len(terminal_info):
         t_name, areas = terminal_info[t]
 
-        # Calcular x_start y x_end del terminal
+        # Calcular inicio y fin del terminal
         t_x_start = None
         t_x_end   = None
         k = 0
@@ -675,7 +671,7 @@ def AirportGateMap(aircrafts, bcn):
         t += 1
 
     #Crear rectángulos de puertas (dinámicos, se actualizan con el slider)
-    gate_rects  = []   # objetos Rectangle
+    gate_rects  = []   # objetos del rectángulo
     gate_texts  = []   # objetos Text con el ID del avión
 
     k = 0
@@ -702,8 +698,6 @@ def AirportGateMap(aircrafts, bcn):
     def update(hour_val):
         hour = int(hour_val)
         snap = snapshots[hour]
-
-        # Construir lookup rápido: (t_name, a_name, gate_name) → (occupied, ac_id)
         snap_keys     = []
         snap_occupied = []
         snap_ac_id    = []
@@ -732,8 +726,6 @@ def AirportGateMap(aircrafts, bcn):
             t_name, a_name, g_idx = gp_keys[k]
 
             # Buscar puerta correspondiente en el snapshot
-            # El nombre de la puerta en el snapshot puede diferir del índice,
-            # así que buscamos por posición relativa dentro del área
             area_gates_in_snap = []
             s = 0
             while s < len(snap_keys):
@@ -741,16 +733,16 @@ def AirportGateMap(aircrafts, bcn):
                     area_gates_in_snap.append(s)
                 s += 1
 
-            occ    = False
+            occ  = False
             ac_id  = None
             if g_idx < len(area_gates_in_snap):
                 snap_idx = area_gates_in_snap[g_idx]
-                occ   = snap_occupied[snap_idx]
+                occ = snap_occupied[snap_idx]
                 ac_id = snap_ac_id[snap_idx]
 
             # Color según estado
             if not occ:
-                color = "#00b894"   # verde: libre
+                color = "#00b894"
                 label = ""
             else:
                 is_night = False
@@ -761,9 +753,9 @@ def AirportGateMap(aircrafts, bcn):
                             is_night = True
                         n += 1
                 if is_night:
-                    color = "#e17055"   # naranja: nocturno
+                    color = "#e17055"
                 else:
-                    color = "#d63031"   # rojo: ocupado
+                    color = "#d63031"
                 label = ac_id if ac_id is not None else "?"
                 occupied_count += 1
 
@@ -788,7 +780,7 @@ def AirportGateMap(aircrafts, bcn):
     update(0)
     fig.patch.set_facecolor("#16213e")
 
-    return plt
+    plt.show()
 
 # test section
 if __name__ == "__main__":
