@@ -1,13 +1,5 @@
-'''
-import sys
-import tkinter as tk
-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-from matplotlib.font_manager import FontProperties
-import interface
-'''
 import re
 import matplotlib.pyplot as plt
-from matplotlib.font_manager import FontProperties
 #Classes.
 class Gate:
     def __init__(self, name):

@@ -1,10 +1,10 @@
 import tkinter as tk
 from tkinter import filedialog, messagebox, simpledialog
-# from airport import *
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import os
-from aircraft import *
 from LEBL import *
+from airport import *
+from aircraft import *
 airports=[]
 aircrafts=[]
 departures=[]
