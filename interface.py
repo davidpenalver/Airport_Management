@@ -77,6 +77,54 @@ def plot_day_occupancy():
     fig = plt_obj.gcf()
     show_plot(fig)
 
+def free_gate():
+    global bcn
+    if bcn is None:
+        messagebox.showerror("Error", "Airport structure not loaded.")
+        return
+    aircraft_id = simpledialog.askstring("Free Gate", "Aircraft ID to free:")
+    if aircraft_id is None or aircraft_id == "":
+        messagebox.showerror("Error", "Aircraft ID is empty.")
+        return
+    result = FreeGate(bcn, aircraft_id)
+    if result == -1:
+        messagebox.showerror("Error", "Aircraft not found in any gate.")
+    else:
+        messagebox.showinfo("Success", "Gate freed successfully.")
+
+        text.delete(1.0, tk.END)
+        gates = GateOccupancy(bcn)
+        i = 0
+        while i < len(gates):
+            text.insert(tk.END, str(gates[i]) + "\n")
+            i += 1
+
+def assign_gates_at_time():
+    global bcn, aircrafts, canvas
+    if bcn is None:
+        messagebox.showerror("Error", "Airport structure not loaded.")
+        return
+    if len(aircrafts) == 0:
+        messagebox.showerror("Error", "No aircraft movements loaded.")
+        return
+    time = simpledialog.askstring("Assign Gates At Time", "Enter hour period, for example 08:00:")
+    if time is None or time == "":
+        messagebox.showerror("Error", "Time is empty.")
+        return
+    result = AssignGatesAtTime(bcn, aircrafts, time)
+    if result == -1:
+        messagebox.showerror("Error", "Invalid time format.")
+        return
+    messagebox.showinfo("Result","Gates assigned for period starting at " + time + "\nNot assigned aircraft: " + str(result))
+    text.delete(1.0, tk.END)
+    text.insert(tk.END, "Period: " + time + "\n")
+    text.insert(tk.END, "Not assigned aircraft: " + str(result) + "\n\n")
+    gates = GateOccupancy(bcn)
+    i = 0
+    while i < len(gates):
+        text.insert(tk.END, str(gates[i]) + "\n")
+        i += 1
+
 #Functions of the interface V3:
 def assign_gate():
     global bcn,aircrafts
@@ -430,6 +478,8 @@ tk.Button(v4_frame, text="Merge Movements",command=merge_movements, width=22,fon
 tk.Button(v4_frame, text="Show Night Aircrafts",command=night_aircraft, width=22,font=("Arial", 10, "bold"),relief="flat",pady=5,cursor="hand2").pack(fill="x", pady=2)
 tk.Button(v4_frame, text="Assign night gates",command=assign_night_gates, width=22,font=("Arial", 10, "bold"),relief="flat",pady=5,cursor="hand2").pack(fill="x", pady=2)
 tk.Button(v4_frame, text="Plot day occupancy",command=plot_day_occupancy, width=22,font=("Arial", 10, "bold"),relief="flat",pady=5,cursor="hand2").pack(fill="x", pady=2)
+tk.Button(v4_frame, text="Free Gate",command=free_gate,width=22, font=("Arial", 10, "bold"),relief="flat", pady=5, cursor="hand2").pack(fill="x", pady=2)
+tk.Button(v4_frame, text="Assign Gates At Time",command=assign_gates_at_time, width=22, font=("Arial", 10, "bold"),relief="flat", pady=5, cursor="hand2").pack(fill="x", pady=2)
 
 '''
 #Exam Button.
