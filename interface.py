@@ -127,6 +127,7 @@ def assign_gates_at_time():
 
 def airport_gate_map():
     global aircrafts, bcn
+    plt.close("all")
     if len(aircrafts) == 0:
         messagebox.showerror("Error", "Load and merge flights first.")
         return
@@ -250,6 +251,7 @@ def show_plot(fig):
     canvas = FigureCanvasTkAgg(fig, master=plot_frame)
     canvas.draw()
     canvas.get_tk_widget().pack(fill="both", expand=True)
+    plt.close(fig)
 
 # Functions of the interface V2.
 def load_aircrafts():
