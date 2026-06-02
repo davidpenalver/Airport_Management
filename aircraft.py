@@ -680,7 +680,7 @@ def AirportGateMap(aircrafts, bcn):
             (x, y), GATE_W, GATE_H,boxstyle="round,pad=0.04",linewidth=0.8, edgecolor="#2d3436",facecolor="#00b894", zorder=4)
         ax.add_patch(rect)
         gate_rects.append(rect)
-        txt = ax.text(x + GATE_W / 2, y + GATE_H / 2, "",ha="center", va="center",fontsize=4.5, color="white", fontweight="bold",zorder=5, wrap=False)
+        txt = ax.text(x + GATE_W / 2, y + GATE_H / 2, "",ha="center", va="center",fontsize=4.5, color="white", fontweight="bold",zorder=5, wrap=False, rotation=90)
         gate_texts.append(txt)
         k += 1
 
