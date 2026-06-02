@@ -507,16 +507,8 @@ def GateReport(bcn, aircrafts, gate_input):
                 i = 0
                 while i < len(compatible):
                     ac = compatible[i]
-                    f.write("{:<12} {:<8} {:<8} {:<8} {:<12} {:<10}\n".format(
-                        ac.aircraft_id if ac.aircraft_id else "-",
-                        ac.origin_airport if ac.origin_airport else "-",
-                        ac.landing_time if ac.landing_time else "-",
-                        ac.airline_company if ac.airline_company else "-",
-                        ac.destination_airport if ac.destination_airport else "-",
-                        ac.departure_time if ac.departure_time else "-",
-                    ))
+                    f.write("{:<12} {:<8} {:<8} {:<8} {:<12} {:<10}\n".format(ac.aircraft_id if ac.aircraft_id else "-",ac.origin_airport if ac.origin_airport else "-",ac.landing_time if ac.landing_time else "-",ac.airline_company if ac.airline_company else "-", ac.destination_airport if ac.destination_airport else "-",ac.departure_time if ac.departure_time else "-",))
                     i += 1
-
             f.write("\n" + "=" * 55 + "\n")
             f.write("  Report by Airport Management System - LEBL\n")
             f.write("=" * 55 + "\n")
