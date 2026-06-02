@@ -305,10 +305,11 @@ def map_flights():
 
 def long_distance_arrivals():
     result = LongDistanceArrivals(aircrafts, airports)
-    if len(result)==0:
-            messagebox.showerror("Error", "List not created.")
+    if result==0:
+            messagebox.showinfo("Success", "Map successfully created.")
+            os.system("Start FlightsMapLD.kml")
     else:
-        messagebox.showinfo("Success", "List successfully created.")
+        messagebox.showerror("Error", "Map not created.")
 
 # Functions of the interface V1.
 def load_airports():

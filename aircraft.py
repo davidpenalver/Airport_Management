@@ -263,7 +263,63 @@ def LongDistanceArrivals(aircrafts, airports):
         if d>2000:
             longdistance.append(aircraft)
         i=i+1
-    return longdistance
+    i = 0
+    while i < len(airports):
+        SetSchengen(airports[i])
+        i += 1
+    dest_airport = None
+    i=0
+    while i < len(airports):
+        if airports[i].icao == "LEBL":
+            dest_airport = airports[i]
+        i += 1
+    if dest_airport is None:
+        print("Destination airport LEBL not found")
+        return -1
+    try:
+        with open("FlightsMapLD.kml", "w") as file:
+            file.write('<?xml version="1.0" encoding="UTF-8"?>\n')
+            file.write('<kml xmlns="http://www.opengis.net/kml/2.2">\n')
+            file.write('<Document>\n')
+            i = 0
+            while i < len(longdistance):
+                aircraft = longdistance[i]
+                origin_code = aircraft.origin_airport
+                #Search airport of origin.
+                origin_airport = None
+                j=0
+                while j<len(airports):
+                    if airports[j].icao==origin_code:
+                        origin_airport=airports[j]
+                    j+=1
+                if origin_airport is None:
+                    i+=1
+                    continue
+#Color.
+                if origin_airport.schengen:
+                    color="ff00ff00"
+                else:
+                    color="ff0000ff"
+                file.write("<Placemark>\n")
+                file.write("<Style>\n")
+                file.write("<LineStyle>\n")
+                file.write("<color>" + color + "</color>\n")
+                file.write("<width>2</width>\n")
+                file.write("</LineStyle>\n")
+                file.write("</Style>\n")
+                file.write("<LineString>\n")
+                file.write("<coordinates>\n")
+                file.write(str(origin_airport.longitude) + "," + str(origin_airport.latitude) + ",0 "+ str(dest_airport.longitude) + "," + str(dest_airport.latitude) + ",0\n")
+                file.write("</coordinates>\n")
+                file.write("</LineString>\n")
+                file.write("</Placemark>\n")
+                i+=1
+            file.write("</Document>\n")
+            file.write("</kml>\n")
+        print("File 'FlightsMapLD.kml' created")
+        return 0
+    except:
+        return -1
 
 #Functions V4:
 #Function 1: Load departures and return list only with departures info of each aircraft.
