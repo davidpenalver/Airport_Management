@@ -38,6 +38,11 @@ def merge_movements():
         aircrafts=merged
         messagebox.showinfo("Success", str(len(aircrafts)) + " movements merged successfully.")
 
+#EXAM interface function:
+def less_2_hours():
+    result=Less2Hours(aircrafts)
+    messagebox.showinfo("Less than 2 hours aircrafts",str(result))
+
 def night_aircraft():
     global aircrafts, night_aircrafts
     if len(aircrafts)==0:
@@ -474,7 +479,7 @@ tk.Button(airport_frame,text="Map of Airports", command=map_airports, width=22,f
 tk.Button(v4_frame,text="Load Flights", command=load_aircrafts, width=22,font=("Arial", 10, "bold"),relief="flat",pady=5,cursor="hand2").pack(fill="x", pady=2)
 tk.Button(flight_frame, text="Merge Movements",command=merge_movements, width=22,font=("Arial", 10, "bold"),relief="flat",pady=5,cursor="hand2").pack(fill="x", pady=2)
 tk.Button(flight_frame,text="Save correct format Flights", command=save_flights, width=22,font=("Arial", 10, "bold"),relief="flat",pady=5,cursor="hand2").pack(fill="x", pady=2)
-tk.Button(flight_frame,text="Save Long Distance Arrivals", command=long_distance_arrivals, width=22,font=("Arial", 10, "bold"),relief="flat",pady=5,cursor="hand2").pack(fill="x", pady=2)
+tk.Button(flight_frame,text="Map Long Distance Arrivals", command=long_distance_arrivals, width=22,font=("Arial", 10, "bold"),relief="flat",pady=5,cursor="hand2").pack(fill="x", pady=2)
 tk.Button(flight_frame,text="Plot Arrivals", command=plot_arrivals, width=22,font=("Arial", 10, "bold"),relief="flat",pady=5,cursor="hand2").pack(fill="x", pady=2)
 tk.Button(flight_frame,text="Plot Flights per Airline", command= plot_airlines, width=22,font=("Arial", 10, "bold"),relief="flat",pady=5,cursor="hand2").pack(fill="x", pady=2)
 tk.Button(flight_frame,text="Plot type of arrivals", command=plot_flights_type, width=22,font=("Arial", 10, "bold"),relief="flat",pady=5,cursor="hand2").pack(fill="x", pady=2)
@@ -497,7 +502,7 @@ tk.Button(gate_frame, text="Interactive Gate Map",command=airport_gate_map, widt
 
 '''
 #Exam Button.
-tk.Button(root, text="Delete short distance arrivals",command=short_distance_arrivals_maps).grid(row=14, column=0)
+tk.Button(gate_frame, text="EXAM BUTTON",command=less_2_hours, width=22, font=("Arial", 10, "bold"),relief="flat", pady=5, cursor="hand2").pack(fill="x", pady=2)
 '''
 
 #Text and plot box.
